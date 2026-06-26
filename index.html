@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intern Padel Toernooi DSIT – 25-06-2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#F15C22;--orange-light:#FEE9DF;--orange-dark:#C04510;
+  --navy:#000639;--navy-mid:#0b0f4a;--navy-light:#e8e9f2;
+  --white:#fff;
+  --border:#e0e0e8;--bg:#fff;--bg2:#f4f4f8;--bg3:#eaeaf0;
+  --text:#000639;--text2:#3a3a5c;--text3:#888;
+  --green:#1a8f5e;--green-light:#dff5ec;
+  --purple:#534AB7;--purple-light:#EEEDFE;
+  --coral:#993C1D;--coral-light:#FAECE7;
+  --radius:12px;--radius-sm:7px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;font-size:14px;color:var(--text);background:var(--bg2);min-height:100vh}
+
+/* ─── HEADER ─── */
+header{background:#fff;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 14px rgba(0,0,0,.1);border-bottom:1px solid var(--border)}
+.hdr-left{display:flex;align-items:center;gap:14px}
+.dsit-logo-svg{height:38px;width:auto;flex-shrink:0}
+.hdr-divider{width:1px;height:30px;background:rgba(0,6,57,.12)}
+.hdr-event{display:flex;flex-direction:column;gap:1px}
+.hdr-event-title{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.01em}
+.hdr-event-date{font-size:10px;color:var(--orange);font-weight:700;letter-spacing:.04em}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.sync-pill{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);background:var(--bg2);border:0.5px solid var(--border);border-radius:20px;padding:4px 10px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);transition:background .3s}
+.dot.saving{background:var(--orange)}.dot.error{background:#e24b4a}
+
+/* ─── TAALSWITCHER (zwevend, los van header) ─── */
+.lang-switcher-float{position:fixed;bottom:18px;right:18px;z-index:300}
+.lang-btn-float{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:#fff;background:var(--navy);border:none;border-radius:24px;padding:10px 16px;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,6,57,.28)}
+.lang-btn-float:hover{background:var(--orange-dark)}
+.lang-menu-float{display:none;position:absolute;bottom:calc(100% + 8px);right:0;background:#fff;border:0.5px solid var(--border);border-radius:var(--radius-sm);box-shadow:0 4px 18px rgba(0,0,0,.18);overflow:hidden;z-index:300;min-width:150px}
+.lang-menu-float.open{display:block}
+.lang-option{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;color:var(--text);background:none;border:none;padding:11px 16px;cursor:pointer;font-family:inherit;border-bottom:0.5px solid var(--border)}
+.lang-option:last-child{border-bottom:none}
+.lang-option:hover{background:var(--bg2);color:var(--orange-dark)}
+.lang-option.active{color:var(--orange);font-weight:800}
+
+@media(max-width:480px){
+  header{padding:0 0.75rem;height:auto;min-height:64px;flex-wrap:wrap;gap:6px;padding-top:8px;padding-bottom:8px}
+  .hdr-left{gap:8px;flex-wrap:nowrap;min-width:0}
+  .dsit-logo-svg{height:30px}
+  .hdr-divider{display:none}
+  .hdr-event{min-width:0}
+  .hdr-event-title{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hdr-event-date{font-size:8.5px;white-space:nowrap}
+  .hdr-right{gap:6px}
+  .sync-pill{font-size:9px;padding:3px 8px;flex-shrink:0}
+  .lang-switcher-float{bottom:14px;right:14px}
+  .lang-btn-float{font-size:12px;padding:9px 14px}
+}
+
+/* ─── NAV ─── */
+nav{background:var(--navy-mid);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(255,255,255,.06)}
+nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;padding:13px 15px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:none;color:rgba(255,255,255,.45);border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;font-family:inherit;letter-spacing:.03em}
+.nav-btn.active{color:#fff;border-bottom-color:var(--orange)}
+.nav-btn:hover{color:rgba(255,255,255,.85)}
+
+/* ─── LAYOUT ─── */
+.main{max-width:740px;margin:0 auto;padding:1.5rem 1rem 5rem}
+.page{display:none}.page.active{display:block}
+
+/* ─── CARDS ─── */
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:12px}
+.section-label{font-size:10px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.09em;margin-bottom:12px}
+
+/* ─── HERO (gebaseerd op DSIT homepage layout) ─── */
+.hero-split{background:var(--navy);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;position:relative}
+.hero-split-inner{display:flex;align-items:center;min-height:260px;position:relative}
+.hero-text{padding:2rem 1.75rem;flex:1;z-index:2}
+.hero-text h1{font-size:26px;font-weight:800;color:#fff;line-height:1.18;margin-bottom:10px}
+.hero-text h1 u{text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:4px;color:#fff}
+.hero-text .subtitle{font-size:13px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+
+/* Compacte hero-variant, bijv. voor de spelregels-pagina */
+.hero-compact{padding:1.1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hero-compact .subtitle{font-size:11px;margin-bottom:2px}
+.hero-compact h1{font-size:18px;margin-bottom:0;line-height:1.2}
+.hero-img-wrap{position:absolute;right:0;top:0;bottom:0;width:42%;overflow:hidden;clip-path:polygon(22% 0,100% 0,100% 100%,0% 100%)}
+.hero-img-wrap svg{width:100%;height:100%}
+
+/* ─── DSIT-stijl hero (wit, oranje lijnen, logo + tagline) ─── */
+.hero-dsit{background:#fdfdfb;border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative;margin-bottom:14px;padding:2.25rem 1.75rem}
+.hero-dsit-lines{position:absolute;inset:0;width:100%;height:100%;opacity:0.85;pointer-events:none}
+.hero-dsit-content{position:relative;z-index:2}
+.hero-dsit-tagline{font-size:22px;font-weight:800;color:var(--navy);line-height:1.3}
+.hero-dsit-tagline .ul-orange{text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:3px}
+.hero-dsit-sub{margin-top:14px}
+
+@media(max-width:560px){
+  .hero-dsit{padding:1.75rem 1.4rem}
+  .hero-dsit-tagline{font-size:18px}
+}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 11px;font-size:11px;font-weight:700;color:#fff}
+.breadcrumb{font-size:11px;color:rgba(255,255,255,.4);padding:10px 1.75rem;background:rgba(0,0,0,.15)}
+.breadcrumb span{color:var(--orange)}
+
+@media(max-width:560px){
+  .hero-img-wrap{display:none}
+  .hero-text{padding:1.75rem 1.4rem}
+  .hero-text h1{font-size:21px}
+}
+
+/* ─── INFO BLOCKS ─── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+@media(max-width:480px){.info-grid{grid-template-columns:1fr}}
+.info-tile{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem;display:flex;flex-direction:column;gap:6px}
+.info-tile-icon{font-size:22px}
+.info-tile-title{font-size:12px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.04em}
+.info-tile-body{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* ─── LOCATIE KAART ─── */
+.loc-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.loc-banner{background:linear-gradient(135deg,var(--navy) 0%,#1a1f6b 100%);padding:1.5rem 1.5rem;position:relative;overflow:hidden}
+.loc-banner::after{content:'';position:absolute;right:1rem;top:50%;transform:translateY(-50%) rotate(15deg);font-size:70px;opacity:.12}
+.loc-banner h2{color:#fff;font-size:18px;font-weight:800;margin-bottom:4px}
+.loc-banner p{color:rgba(255,255,255,.65);font-size:12px;font-weight:600}
+.loc-body{padding:1.25rem}
+.loc-body p{font-size:13px;line-height:1.75;color:var(--text2);margin-bottom:12px}
+.loc-meta{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.loc-meta-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text)}
+.loc-meta-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
+.loc-link{color:var(--orange);font-weight:700;text-decoration:none}
+
+/* ─── VIDEO ─── */
+.video-card{background:var(--navy);border-radius:var(--radius-sm);padding:1.25rem;margin-top:10px;display:flex;align-items:center;gap:14px}
+.video-icon{width:46px;height:46px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.video-text{flex:1}
+.video-text strong{color:#fff;font-size:13px;display:block;margin-bottom:2px}
+.video-text span{color:rgba(255,255,255,.55);font-size:11px}
+.video-link{flex-shrink:0;background:var(--orange);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;text-decoration:none;white-space:nowrap}
+
+/* ─── PADEL UITLEG ─── */
+.rule-block h2{font-size:14px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px;color:var(--navy)}
+.rule-block p,.rule-block li{font-size:13px;line-height:1.75;color:var(--text2)}
+.rule-block ul{padding-left:1.2rem;margin-top:4px}
+.rule-block li{margin-bottom:5px}
+.rule-block strong{color:var(--navy)}
+.score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.score-pill{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 4px;text-align:center}
+.score-pill strong{display:block;font-size:15px;font-weight:800;color:var(--navy)}
+.score-pill span{font-size:10px;color:var(--text3)}
+.tip-row{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border);align-items:flex-start}
+.tip-row:last-child{border-bottom:none}
+.tip-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.tip-text{font-size:13px;color:var(--text2);line-height:1.6}
+.highlight-box{background:var(--orange-light);border-left:3px solid var(--orange);border-radius:var(--radius-sm);padding:12px 14px;margin-top:12px;font-size:12px;color:var(--orange-dark);font-weight:600;line-height:1.6}
+
+/* ─── SCHEMA ─── */
+.schedule-block{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.phase-bar{background:var(--navy);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.phase-bar-title{font-size:12px;font-weight:800;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.phase-bar-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--orange);color:#fff;flex-shrink:0}
+.round-label{background:var(--bg3);padding:6px 14px;font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.sch-header{display:grid;grid-template-columns:54px 1fr 78px 62px;gap:6px;padding:7px 14px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);border-bottom:0.5px solid var(--border);background:var(--bg2)}
+.sch-row{display:grid;grid-template-columns:54px 1fr 78px 62px;gap:6px;padding:9px 14px;border-bottom:0.5px solid var(--border);align-items:center;transition:background .1s}
+.sch-row:last-child{border-bottom:none}
+.sch-row:hover{background:var(--bg2)}
+.sch-row.rest-row{background:var(--bg2);font-style:italic}
+.sch-row.sch-row-played{background:var(--green-light)}
+.sch-row.sch-row-played:hover{background:var(--green-light)}
+.sch-time{font-size:13px;font-weight:800;color:var(--navy)}
+.sch-match{font-size:13px;font-weight:500;color:var(--text)}
+.sch-match small{display:block;font-size:10px;color:var(--text3);margin-top:1px}
+.sch-field{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px}
+.field-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sch-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;text-align:center;display:inline-block}
+.break-row{background:var(--orange-light);padding:10px 14px;display:flex;align-items:center;gap:10px}
+.break-icon{font-size:17px}
+.break-text{font-size:12px;font-weight:700;color:var(--orange-dark)}
+
+@media(max-width:480px){
+  .sch-header,.sch-row{grid-template-columns:44px 1fr 60px 0px}
+  .sch-header div:last-child,.sch-row>div:last-child{display:none}
+}
+
+/* ─── TEAMS ─── */
+.team-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:0.5px solid var(--border)}
+
+/* ─── TEAMS OVERZICHT ─── */
+.teams-overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:480px){.teams-overview-grid{grid-template-columns:1fr;gap:16px}}
+.team-overview-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px;font-weight:600;color:var(--text)}
+.team-overview-row:last-child{border-bottom:none}
+.team-row:last-child{border-bottom:none}
+.team-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.na{background:var(--orange-light);color:var(--orange-dark)}
+.nb{background:var(--navy-light);color:var(--navy)}
+input[type=text]{flex:1;font-size:13px;padding:7px 10px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);outline:none;font-family:inherit;transition:border-color .15s}
+input[type=text]:focus{border-color:var(--orange)}
+input[type=password]{font-size:14px;padding:8px 12px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);outline:none;font-family:inherit;transition:border-color .15s;width:100%;letter-spacing:2px;text-align:center}
+input[type=password]:focus{border-color:var(--orange)}
+input[type=number]{width:50px;text-align:center;font-size:16px;font-weight:700;padding:6px 4px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);outline:none;font-family:inherit;-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input[type=number]:focus{border-color:var(--orange)}
+input[disabled]{background:var(--bg2);color:var(--text3);cursor:not-allowed}
+button.primary{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;font-size:13px;font-weight:700;font-family:inherit;background:var(--orange);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:opacity .15s;letter-spacing:.02em}
+button.primary:hover{opacity:.87}
+button.secondary{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:12px;font-weight:700;font-family:inherit;background:var(--navy-light);color:var(--navy);border:none;border-radius:var(--radius-sm);cursor:pointer;transition:opacity .15s}
+button.secondary:hover{opacity:.8}
+
+/* ─── MATCH CARDS ─── */
+.match-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:8px}
+.match-card.locked{background:var(--bg2)}
+.match-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.match-meta{font-size:11px;color:var(--text3);font-weight:700}
+.field-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.match-teams{display:flex;align-items:center;gap:8px}
+.match-team{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.match-team.r{text-align:right}
+.score-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.vs{font-size:12px;color:var(--text3)}
+.lock-row{display:flex;align-items:center;justify-content:center;gap:8px;padding:4px 0 2px}
+.lock-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--orange-dark);background:var(--orange-light);border:none;border-radius:20px;padding:5px 12px;cursor:pointer}
+.unlocked-tag{font-size:10px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:4px}
+
+/* ─── PASSWORD MODAL ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,6,57,.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal-box{background:#fff;border-radius:var(--radius);padding:1.5rem;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-box h3{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.modal-box p{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5}
+.modal-actions{display:flex;gap:8px;margin-top:14px}
+.modal-actions button{flex:1;padding:9px;font-size:13px;font-weight:700;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:inherit}
+.modal-cancel{background:var(--bg2);color:var(--text2)}
+.modal-confirm{background:var(--orange);color:#fff}
+.modal-error{font-size:11px;color:#e24b4a;font-weight:600;margin-top:6px;display:none}
+
+/* ─── STAND ─── */
+.pool-title{font-size:14px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.stand-table{width:100%;border-collapse:collapse;font-size:13px}
+.stand-table th{text-align:left;font-size:10px;font-weight:800;color:var(--text3);padding:5px 8px;border-bottom:0.5px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
+.stand-table td{padding:8px;border-bottom:0.5px solid var(--border)}
+.stand-table tr:last-child td{border-bottom:none}
+.stand-table tr.q-win{background:var(--orange-light)}
+.stand-table tr.q-win td:first-child{border-left:3px solid var(--orange);padding-left:5px}
+.stand-table tr.q-los{background:var(--purple-light)}
+.stand-table tr.q-los td:first-child{border-left:3px solid var(--purple);padding-left:5px}
+.stand-table tr.q-last{background:var(--coral-light)}
+.stand-table tr.q-last td:first-child{border-left:3px solid var(--coral);padding-left:5px}
+
+.stand-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.stand-swipe-hint{display:none;font-size:10px;color:var(--text3);text-align:right;margin-top:4px;font-style:italic}
+
+@media(max-width:560px){
+  .stand-table{font-size:11px;min-width:520px}
+  .stand-table th{font-size:9px;padding:5px 6px;white-space:nowrap}
+  .stand-table td{padding:6px}
+  .stand-table td:nth-child(2){white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+  .stand-swipe-hint{display:block}
+}
+
+/* ─── KNOCKOUT ─── */
+.ko-section{font-size:13px;font-weight:800;color:var(--navy);margin:1rem 0 8px;display:flex;align-items:center;gap:8px}
+.ko-section::before{content:'';width:3px;height:16px;background:var(--orange);border-radius:2px;display:inline-block}
+.ko-match{display:flex;align-items:center;gap:12px;background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:8px;font-size:13px;font-weight:500}
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700}
+.bo{background:var(--orange-light);color:var(--orange-dark)}
+.bn{background:var(--navy-light);color:var(--navy)}
+.bp{background:var(--purple-light);color:var(--purple)}
+.bc{background:var(--coral-light);color:var(--coral)}
+
+/* ─── LEGEND ─── */
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);font-weight:500}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════ HEADER ════════════════════════════ -->
+<header>
+  <div class="hdr-left">
+    <!-- DSIT logo: alleen 'dsit' tekst, geen kader, geen streep -->
+    <svg class="dsit-logo-svg" viewBox="0 0 110 34" xmlns="http://www.w3.org/2000/svg" aria-label="DSIT logo">
+      <text x="0" y="27" font-family="Arial Black,Arial,sans-serif" font-size="28" font-weight="900" fill="#000639" letter-spacing="-0.5">dsıt</text>
+    </svg>
+    <div class="hdr-divider"></div>
+    <div class="hdr-event">
+      <span class="hdr-event-title" data-i18n="hdr_title">Intern Padel Toernooi</span>
+      <span class="hdr-event-date" data-i18n="hdr_date">DO 25-06-2026 · 18:00–21:00</span>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="sync-pill">
+      <span class="dot" id="sync-dot"></span>
+      <span id="sync-label">Laden...</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════ NAV ════════════════════════════ -->
+<nav>
+  <button class="nav-btn active" onclick="showPage('welkom')" data-i18n="nav_welkom">Welkom</button>
+  <button class="nav-btn" onclick="showPage('padel')" data-i18n="nav_spelregels">Spelregels</button>
+  <button class="nav-btn" onclick="showPage('teams')" data-i18n="nav_teams">Teams</button>
+  <button class="nav-btn" onclick="showPage('programma')" data-i18n="nav_programma">Programma</button>
+  <button class="nav-btn" onclick="showPage('scores')" data-i18n="nav_scores">Scores</button>
+  <button class="nav-btn" onclick="showPage('stand')" data-i18n="nav_stand">Stand</button>
+  <button class="nav-btn" onclick="showPage('ko')" data-i18n="nav_knockout">Knockout</button>
+  <button class="nav-btn" onclick="showPage('rma')" data-i18n="nav_rma">RMA</button>
+</nav>
+
+<!-- Zwevende taalknop: los van de header, altijd bereikbaar op elk schermformaat -->
+<div class="lang-switcher lang-switcher-float" id="lang-switcher">
+  <button class="lang-btn lang-btn-float" id="lang-btn" onclick="toggleLangMenu()">🌐 <span id="lang-current">NL</span></button>
+  <div class="lang-menu lang-menu-float" id="lang-menu">
+    <button class="lang-option" data-lang="nl" onclick="setLanguage('nl')">Nederlands</button>
+    <button class="lang-option" data-lang="pl" onclick="setLanguage('pl')">Polski</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════════════════════════════ WELKOM -->
+<div id="page-welkom" class="page active">
+
+  <div class="hero-dsit">
+    <svg class="hero-dsit-lines" viewBox="0 0 800 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#F15C22" stroke-width="1" fill="none" opacity="0.5">
+        <path d="M-50,-20 Q300,40 850,260"/>
+        <path d="M-50,-5 Q300,55 850,275"/>
+        <path d="M-50,10 Q300,70 850,290"/>
+        <path d="M-50,25 Q300,85 850,305"/>
+        <path d="M-50,40 Q300,100 850,320"/>
+        <path d="M-50,55 Q300,115 850,335"/>
+        <path d="M-50,70 Q300,130 850,350"/>
+        <path d="M-50,85 Q300,145 850,365"/>
+        <path d="M-50,100 Q300,160 850,380"/>
+        <path d="M-50,115 Q300,175 850,395"/>
+        <path d="M-50,-35 Q300,25 850,245"/>
+        <path d="M-50,-50 Q300,10 850,230"/>
+        <path d="M-50,-65 Q300,-5 850,215"/>
+        <path d="M-50,-80 Q300,-20 850,200"/>
+        <path d="M-50,-95 Q300,-35 850,185"/>
+        <path d="M-50,130 Q300,190 850,410"/>
+        <path d="M-50,145 Q300,205 850,425"/>
+        <path d="M-50,160 Q300,220 850,440"/>
+        <path d="M-50,175 Q300,235 850,455"/>
+        <path d="M-50,190 Q300,250 850,470"/>
+      </g>
+    </svg>
+    <div class="hero-dsit-content">
+      <div class="hero-dsit-tagline" data-i18n="hero_tagline"><span class="ul-orange">Eerlijk</span>, <span class="ul-orange">echt</span> en <span class="ul-orange">enthousiast</span><br>op de Padelbaan</div>
+      <div class="hero-chips hero-dsit-sub">
+        <span class="chip" style="background:var(--navy-light);color:var(--navy);border-color:transparent" data-i18n="hero_chip_date">Donderdag 25-06-2026</span>
+        <span class="chip" style="background:var(--navy-light);color:var(--navy);border-color:transparent" data-i18n="hero_chip_time">18:00 – 21:00 uur</span>
+        <span class="chip" style="background:var(--navy-light);color:var(--navy);border-color:transparent" data-i18n="hero_chip_loc">Plaza Padel Almelo</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#FEE2E2;border-left:4px solid #DC2626;border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:14px">
+    <div style="font-size:12px;font-weight:800;color:#DC2626;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Update</div>
+    <p style="font-size:13px;color:#7F1D1D;line-height:1.7;margin:0">Gezien de weersverwachting zal de organisatie rekening houden met het programma en gekoelde dranken regelen. Naar schatting zal het binnen tussen de <strong>20-25 graden</strong> zijn. De hal is goed geïsoleerd en is prima te doen om te sporten. Zeker een stuk kouder dan buiten!<br><br>Na werktijd is er de mogelijkheid om op eigen gelegenheid een hapje te eten. Omkleden kan bij <strong>DSIT</strong> of bij <strong>Plaza Padel in Almelo</strong>, wat ongeveer 5 minuten rijden is vanaf DSIT. Er is de mogelijkheid om waardevolle spullen te bewaren in een tasje, dat achter de bar bewaard wordt. Kluisjes met een code zijn helaas niet aanwezig, houd daar dus rekening mee.<br><br>Het invullen van de scores doen we bij voorkeur via de app. Mocht dit niet lukken, dan is het mogelijk om dit op papier te doen en zal de organisatie dit verwerken.<br><br>Daarnaast is de teamindeling en het schema iets aangepast. Bekijk dit op de juiste pagina.</p>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-tile">
+      <div class="info-tile-icon"></div>
+      <div class="info-tile-title" data-i18n="info1_title">9 teams</div>
+      <div class="info-tile-body" data-i18n="info1_body">We verdelen iedereen in koppels over twee poules: Poule A met 4 teams en Poule B met 5 teams. Samen spelen, samen lachen.</div>
+    </div>
+    <div class="info-tile">
+      <div class="info-tile-icon"></div>
+      <div class="info-tile-title" data-i18n="info2_title">14 minuten per wedstrijd</div>
+      <div class="info-tile-body" data-i18n="info2_body">Geen sets maar legs tot en met 40 punten. Als de bel gaat is de wedstrijd voorbij — de stand op dat moment telt.</div>
+    </div>
+    <div class="info-tile">
+      <div class="info-tile-icon"></div>
+      <div class="info-tile-title" data-i18n="info3_title">Iedereen speelt finales</div>
+      <div class="info-tile-body" data-i18n="info3_body">Na de groepsfase volgt voor iedereen een knockout-wedstrijd — van de top tot de staart van de ranglijst.</div>
+    </div>
+    <div class="info-tile">
+      <div class="info-tile-icon"></div>
+      <div class="info-tile-title" data-i18n="info4_title">Afsluiting met een drankje</div>
+      <div class="info-tile-body" data-i18n="info4_body">Na de laatste finale vieren we de winnaars en sluiten we de avond gezellig af op de baan.</div>
+    </div>
+  </div>
+
+  <div class="loc-card">
+    <div class="loc-banner">
+      <h2 data-i18n="loc_title">Plaza Padel Almelo</h2>
+      <p data-i18n="loc_subtitle">Onze locatie voor het toernooi</p>
+    </div>
+    <div class="loc-body">
+      <p data-i18n="loc_p1">We spelen dit jaar bij <strong>Plaza Padel Almelo</strong>, een van de modernste padelclubs van Twente. Sinds de opening in 2025 is deze locatie aan de César Franckstraat al razendsnel uitgegroeid tot het padel-hart van de regio — met liefst <strong>10 indoorbanen</strong> onder één dak, opgericht door zevenvoudig Nederlands kampioen Bram Meijer.</p>
+      <p data-i18n="loc_p2">Voor onze 4 gereserveerde banen betekent dit: een lichte, sfeervolle hal, professionele banen en alle ruimte om met collega's een avond vol sport en gezelligheid te beleven. Na het laatste punt kun je in de horecagelegenheid nog even nazitten met een drankje.</p>
+      <div class="loc-meta">
+        <div class="loc-meta-row"><span class="loc-meta-icon"></span> <span data-i18n="loc_addr">César Franckstraat 7a-14, 7604 JE Almelo</span></div>
+        <div class="loc-meta-row"><span class="loc-meta-icon"></span> <span data-i18n="loc_parking">Voldoende parkeergelegenheid aanwezig</span></div>
+        <div class="loc-meta-row"><span class="loc-meta-icon">️</span> <span data-i18n="loc_courts">10 indoorbanen — wij spelen op 4 banen tegelijk</span></div>
+        <div class="loc-meta-row"><span class="loc-meta-icon"></span> <a class="loc-link" href="https://www.plazapadel.com/nl/almelo" target="_blank">plazapadel.com/nl/almelo</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--orange)">
+    <div class="section-label" data-i18n="dsit_label">Over DSIT</div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.7" data-i18n="dsit_body">DSIT is specialist in server- en patchkasten en levert al jaren aan groothandelaren, installateurs en IT-professionals door heel Europa, vanuit eigen voorraad in Almelo. Vandaag ruilen we het magazijn even in voor de padelbaan — tijd om elkaar op een andere manier te leren kennen!</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ SPELREGELS -->
+<div id="page-padel" class="page">
+
+  <div class="hero-split hero-compact" style="background:var(--orange-dark)">
+    <div class="hero-text" style="padding:0">
+      <div class="subtitle" style="color:rgba(255,255,255,.65)" data-i18n="rules_subtitle">Voor beginners én gevorderden</div>
+      <h1 data-i18n="rules_title">Padel spelregels</h1>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="video-card">
+      <div class="video-text">
+        <strong data-i18n="video_title">Liever een filmpje kijken?</strong>
+        <span data-i18n="video_body">Bekijk in 2 minuten hoe padel precies werkt</span>
+      </div>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=hoe+werkt+padel+uitleg" target="_blank" data-i18n="video_link">Bekijk video →</a>
+    </div>
+  </div>
+
+  <div class="card rule-block" style="margin-top:12px">
+    <h2 data-i18n="basics_title">Zo werkt padel — de basisregels</h2>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="basics_1"><strong>2 tegen 2.</strong> Padel is altijd dubbelspel. Je speelt dus altijd met een vaste partner samen.</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="basics_2"><strong>Opslag.</strong> De opslag is altijd onderhands (van onderaf), na één stuit op de grond. Je slaat diagonaal naar het servicevak van de tegenstander.</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="basics_3"><strong>De wand is je vriend.</strong> Na de bounce mag de bal van de glazen wand afkaatsen. Je kunt hem dan nog steeds terugspelen. Dit maakt padel uniek!</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="basics_4"><strong>Let op:</strong> de bal mag maar <em>één keer</em> stuiteren voordat jij hem terugslaat. Stuitert hij twee keer? Dan is het punt voorbij voor de tegenstander.</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="basics_5"><strong>Out.</strong> Valt de bal buiten het speelveld, of raakt hij de wand zonder eerst te stuiteren? Dan is het out en verlies je het punt.</span>
+    </div>
+  </div>
+
+  <div class="card rule-block" style="margin-top:12px">
+    <h2 data-i18n="scoring_title">Puntentelling — wij spelen legs</h2>
+    <p style="margin-bottom:10px" data-i18n="scoring_intro">Tijdens dit toernooi spelen we <strong>alleen legs tot en met 40 punten</strong> — geen volledige sets. Dit is hoe een leg wordt opgebouwd:</p>
+    <div class="score-grid">
+      <div class="score-pill"><strong>0</strong><span data-i18n="scoring_love">Love</span></div>
+      <div class="score-pill"><strong>15</strong><span data-i18n="scoring_1pt">1 punt</span></div>
+      <div class="score-pill"><strong>30</strong><span data-i18n="scoring_2pt">2 punten</span></div>
+      <div class="score-pill"><strong>40</strong><span data-i18n="scoring_40">3 punten</span></div>
+      <div class="score-pill"><strong style="color:var(--orange)">Punt</strong><span data-i18n="scoring_won">Leg gewonnen*</span></div>
+    </div>
+    <p style="margin-top:12px" data-i18n="scoring_suddendeath">Bij <strong>40-40</strong> (gelijke stand) speel je het volgende punt als <strong>"sudden death"</strong>: wie dat punt wint, wint de leg. Zo blijft het tempo hoog en kun je binnen 14 minuten meerdere legs spelen.</p>
+    <p data-i18n="scoring_winrule">Elke gewonnen leg = 1 punt voor jouw team. <strong>Wie de meeste legs heeft als de bel gaat, wint de wedstrijd.</strong></p>
+  </div>
+
+  <div class="card rule-block" style="margin-top:12px">
+    <h2 data-i18n="standing_title">Hoe wordt de stand in de poule bepaald?</h2>
+    <p style="margin-bottom:10px" data-i18n="standing_intro">Voor de eindstand in de groepsfase telt niet alleen winst of verlies, maar ook hoeveel legs je hebt gewonnen en tegen gekregen. Zo bepalen we de volgorde:</p>
+    <div class="score-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="score-pill"><strong>3</strong><span data-i18n="standing_win">Punten bij winst</span></div>
+      <div class="score-pill"><strong>1</strong><span data-i18n="standing_draw">Punt bij gelijkspel (elk team)</span></div>
+      <div class="score-pill"><strong>0</strong><span data-i18n="standing_loss">Punten bij verlies</span></div>
+    </div>
+    <p style="margin-top:12px" data-i18n="standing_tiebreak_intro">Staan teams in de poule gelijk op punten? Dan wordt de volgorde zo bepaald:</p>
+    <ul>
+      <li data-i18n="standing_tb1"><strong>1. Legs-saldo</strong> — het totaal aantal gewonnen legs minus het aantal tegen gekregen legs over alle wedstrijden in de poule. Wie het hoogste saldo heeft, staat hoger.</li>
+      <li data-i18n="standing_tb2"><strong>2. Onderlinge uitslag</strong> — staat het legs-saldo ook gelijk? Dan telt wie de directe wedstrijd tussen die teams heeft gewonnen.</li>
+      <li data-i18n="standing_tb3"><strong>3. Beslissende leg</strong> — staat alles nog steeds gelijk (punten, saldo én onderlinge uitslag)? Dan wordt er één winnende leg gespeeld tussen de betreffende teams om de volgorde te bepalen. Hierdoor kan het programma iets uitlopen.</li>
+    </ul>
+    <div class="highlight-box" data-i18n="standing_highlight">
+      Houd dus niet alleen je gewonnen wedstrijden in de gaten, maar ook je gewonnen legs — die kunnen het verschil maken in de eindstand!
+    </div>
+  </div>
+
+  <div class="card rule-block" style="margin-top:12px">
+    <h2 data-i18n="timing_title">Tijd & toernooi-opzet</h2>
+    <ul>
+      <li data-i18n="timing_1">Elke wedstrijd duurt exact <strong>14 minuten</strong> — daarna gaat de bel en is de wedstrijd voorbij</li>
+      <li data-i18n="timing_2">De stand op dat moment (aantal gewonnen legs) bepaalt de winnaar</li>
+      <li data-i18n="timing_3">Staat het gelijk? Dan telt het puntenverschil binnen de laatste leg, of beslist de organisatie op de baan</li>
+      <li data-i18n="timing_4">Na elke wedstrijd is er <strong>5 minuten overbrugging</strong> om van baan te wisselen en op te warmen</li>
+      <li data-i18n="timing_5">Je speelt <strong>4 wedstrijden</strong> in de groepsfase — steeds maximaal 1 wedstrijd per ronde</li>
+    </ul>
+    <div class="highlight-box" data-i18n="timing_highlight">
+      <strong>Onthoud:</strong> geen sets, alleen legs tot en met 40 punten — en de klok bepaalt wanneer het klaar is. Blijf dus altijd scherp, ook als je achter staat!
+    </div>
+  </div>
+
+  <div class="card rule-block" style="margin-top:12px">
+    <h2 data-i18n="withdraw_title">Afmelden voor of tijdens het toernooi</h2>
+    <p data-i18n="withdraw_body">Meldt een team zich af — vóór het toernooi begint of tussentijds tijdens de groepsfase — dan verliest dat team automatisch al zijn <strong>nog te spelen wedstrijden met 3-0</strong>. Zo blijft de stand voor alle andere teams eerlijk en correct, ook als een team niet alle wedstrijden kan voltooien.</p>
+    <div class="highlight-box" data-i18n="withdraw_highlight">
+      Wil je je team afmelden? Ga naar het tabblad <strong>RMA</strong> en volg de instructies daar.
+    </div>
+  </div>
+
+  <div class="card rule-block" style="margin-top:12px">
+    <h2 data-i18n="tips_title">Gouden tips voor beginners</h2>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="tips_1"><strong>Communiceer!</strong> Roep "jij!" of "ik!" zodat jullie niet allebei naar dezelfde bal rennen (of allebei weg). Communicatie wint wedstrijden.</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="tips_2"><strong>Gebruik de achterwand.</strong> Als de bal moeilijk is, laat hem dan van de achterwand afkaatsen en speel hem terug. Dat is geen zwakte, dat is slim padel!</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="tips_3"><strong>Naar het net!</strong> Na de opslag lopen beide spelers richting het net. Vanuit het net speel je aanvallender en maak je meer kans op een punt.</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="tips_4"><strong>De lob.</strong> Een hoge bal over de tegenstanders heen is een van de sterkste wapens in padel. Ze moeten naar achteren en jij neemt het net over!</span>
+    </div>
+    <div class="tip-row">
+      <span class="tip-icon"></span>
+      <span class="tip-text" data-i18n="tips_5"><strong>Geniet ervan.</strong> Padel is een sociaal spel. Iedereen begint ooit als beginner. Fouten maken hoort erbij — lachen mag altijd.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ TEAMS -->
+<div id="page-teams" class="page">
+
+  <div class="card">
+    <div class="section-label" data-i18n="teams_label">Teams</div>
+    <div class="teams-overview-grid">
+      <div>
+        <div class="pool-title"><span class="badge bo" data-i18n="pool_a">Poule A</span></div>
+        <div id="teams-overview-a"></div>
+      </div>
+      <div>
+        <div class="pool-title"><span class="badge bn" data-i18n="pool_b">Poule B</span></div>
+        <div id="teams-overview-b"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ PROGRAMMA (per veld/tijd/team) -->
+<div id="page-programma" class="page">
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="section-label" data-i18n="courts_legend">Banen legenda</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#F15C22"></div><span data-i18n="court1">Baan 4</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#000639"></div><span data-i18n="court2">Baan 6</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1a8f5e"></div><span data-i18n="court3">Baan 8</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div><span data-i18n="court4">Baan 10</span></div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="phase-bar">
+      <span class="phase-bar-title" data-i18n="groupphase_title">Groepsfase</span>
+      <span class="phase-bar-badge">18:15 – 19:45</span>
+    </div>
+    <div id="schedule-group"></div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="break-row">
+      <span class="break-icon"></span>
+      <div>
+        <div class="break-text" data-i18n="break_text">19:45 – 20:00 · Pauze &amp; nieuwe indeling knockout</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px" data-i18n="break_sub">Organisatie maakt de knockout-indeling bekend op basis van de stand</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--text3);text-align:center;margin-top:8px" data-i18n="programma_footer">Bekijk de volledige knockout-fase (halve finales &amp; finales) op het tabblad <strong>Knockout</strong> →</p>
+</div>
+
+<!-- ══════════════════════════════════════════ SCORES -->
+<div id="page-scores" class="page">
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="section-label" data-i18n="scores_howto_label">Hoe werkt het invullen?</div>
+    <p style="font-size:12px;color:var(--text2);line-height:1.6" data-i18n="scores_howto_body">Elke wedstrijd heeft een eigen <strong>4-cijferig wachtwoord</strong>. Vraag dit aan de organisatie op de baan. Zodra je het wachtwoord invult kun je de score van die wedstrijd aanpassen. Wil je later nog iets wijzigen? Dan vul je het wachtwoord opnieuw in.</p>
+  </div>
+
+  <div id="matches-by-round"></div>
+
+  <div class="ko-section" data-i18n="ko_section_label">Knockout-fase</div>
+  <div id="matches-ko"></div>
+</div>
+
+<!-- ══════════════════════════════════════════ WACHTWOORD MODAL ─── -->
+<!-- ══ VERLIEZERS POPUP ══ -->
+<div class="modal-overlay active" id="verliezers-modal" onclick="this.classList.remove('active')">
+  <div class="modal-box" style="text-align:center;max-width:300px" onclick="event.stopPropagation()">
+    <div style="font-size:48px;margin-bottom:8px">🥄</div>
+    <h3 style="font-size:17px;color:var(--coral)">Verliezers van de dag</h3>
+    <p style="font-size:14px;font-weight:800;color:var(--navy);margin:8px 0 4px">Angela en Nick</p>
+    <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:16px">Volgende keer beter! 💪<br>Jullie hebben er alles aan gedaan.</p>
+    <button class="primary" onclick="document.getElementById('verliezers-modal').classList.remove('active')" style="width:100%">Sluiten</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="pw-modal">
+  <div class="modal-box">
+    <h3 data-i18n="modal_title">Wachtwoord voor deze wedstrijd</h3>
+    <p id="pw-modal-text" data-i18n="modal_body">Vraag het wachtwoord aan de organisatie om de score van deze wedstrijd in te vullen.</p>
+    <input type="password" id="pw-input" placeholder="••••" maxlength="4" inputmode="numeric" />
+    <div class="modal-error" id="pw-error" data-i18n="modal_error">Onjuist wachtwoord, probeer het opnieuw.</div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closePwModal()" data-i18n="modal_cancel">Annuleren</button>
+      <button class="modal-confirm" onclick="submitPw()" data-i18n="modal_confirm">Bevestigen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ STAND -->
+<div id="page-stand" class="page">
+  <div class="card" style="margin-bottom:12px">
+    <div class="pool-title"><span class="badge bo" data-i18n="pool_a">Poule A</span></div>
+    <div class="stand-table-wrap">
+      <table class="stand-table">
+        <thead><tr><th>#</th><th data-i18n="th_team">Team</th><th data-i18n="th_gesp">Gesp.</th><th>W</th><th>G</th><th>V</th><th>Ptn</th><th>GL</th><th>TL</th><th data-i18n="th_saldo">Saldo</th></tr></thead>
+        <tbody id="stand-a"></tbody>
+      </table>
+    </div>
+    <div class="stand-swipe-hint" data-i18n="swipe_hint">← swipe voor alle kolommen →</div>
+  </div>
+  <div class="card">
+    <div class="pool-title"><span class="badge bn" data-i18n="pool_b">Poule B</span></div>
+    <div class="stand-table-wrap">
+      <table class="stand-table">
+        <thead><tr><th>#</th><th data-i18n="th_team">Team</th><th data-i18n="th_gesp">Gesp.</th><th>W</th><th>G</th><th>V</th><th>Ptn</th><th>GL</th><th>TL</th><th data-i18n="th_saldo">Saldo</th></tr></thead>
+        <tbody id="stand-b"></tbody>
+      </table>
+    </div>
+    <div class="stand-swipe-hint" data-i18n="swipe_hint">← swipe voor alle kolommen →</div>
+  </div>
+  <div class="card" style="margin-top:4px;font-size:12px;color:var(--text2);line-height:2.1">
+    <div class="section-label" data-i18n="legend_label">Legenda</div>
+    <span data-i18n="legend_body">Gesp. = wedstrijden gespeeld · W = gewonnen · G = gelijkspel · V = verloren · Ptn = punten · GL = gewonnen legs · TL = tegen legs · Saldo = GL − TL</span><br><br>
+    <span style="display:inline-block;width:10px;height:10px;background:var(--orange-light);border-left:3px solid var(--orange);margin-right:6px;vertical-align:middle"></span><span data-i18n="legend_orange">Oranje (1e &amp; 2e) → <strong>winnaars bracket</strong></span><br>
+    <span style="display:inline-block;width:10px;height:10px;background:var(--purple-light);border-left:3px solid var(--purple);margin-right:6px;vertical-align:middle"></span><span data-i18n="legend_purple">Paars (3e &amp; 4e) → <strong>verliezers bracket</strong></span><br>
+    <span style="display:inline-block;width:10px;height:10px;background:var(--coral-light);border-left:3px solid var(--coral);margin-right:6px;vertical-align:middle"></span><span data-i18n="legend_coral">Rood (5e) → <strong>verliezersfinale</strong></span>
+  </div>
+  <div class="card highlight-box" style="margin-top:4px;display:none" id="stand-tiebreak-info" data-i18n="tiebreak_info">
+    <strong>Hoe wordt de volgorde bepaald bij gelijke punten?</strong><br>
+    1) Eerst het hoogste aantal <strong>gewonnen legs (GL)</strong> in de poule.<br>
+    2) Staat dat ook gelijk? Dan telt de <strong>onderlinge uitslag</strong> tussen die teams.<br>
+    3) Nog steeds gelijk? Dan wordt een <strong>beslissende leg</strong> gespeeld tussen de betreffende teams. Het programma kan hierdoor iets uitlopen.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ KNOCKOUT (volledig schema incl finales) -->
+<div id="page-ko" class="page">
+
+  <div class="schedule-block">
+    <div class="phase-bar">
+      <span class="phase-bar-title" data-i18n="ko_semis_title">Halve finales</span>
+      <span class="phase-bar-badge">20:00 – 20:14</span>
+    </div>
+    <div class="sch-header"><div data-i18n="th_time">Tijd</div><div data-i18n="th_match">Wedstrijd</div><div data-i18n="th_court">Baan</div><div data-i18n="th_type">Type</div></div>
+    <div class="sch-row">
+      <div class="sch-time">20:00</div>
+      <div class="sch-match" id="ko-sf1-label">SF 1 — Winnaars bracket</div>
+      <div class="sch-field"><div class="field-dot" style="background:#F15C22"></div><span data-i18n="court1">Baan 4</span></div>
+      <div><span class="sch-badge bo" data-i18n="bracket_winners">Winnaars</span></div>
+    </div>
+    <div class="sch-row">
+      <div class="sch-time"></div>
+      <div class="sch-match" id="ko-sf2-label">SF 2 — Winnaars bracket</div>
+      <div class="sch-field"><div class="field-dot" style="background:#000639"></div><span data-i18n="court2">Baan 6</span></div>
+      <div><span class="sch-badge bo" data-i18n="bracket_winners">Winnaars</span></div>
+    </div>
+    <div class="sch-row">
+      <div class="sch-time"></div>
+      <div class="sch-match" id="ko-sf3-label">SF 3 — Verliezers bracket</div>
+      <div class="sch-field"><div class="field-dot" style="background:#1a8f5e"></div><span data-i18n="court3">Baan 8</span></div>
+      <div><span class="sch-badge bp" data-i18n="bracket_losers">Verliezers</span></div>
+    </div>
+    <div class="sch-row">
+      <div class="sch-time"></div>
+      <div class="sch-match" id="ko-sf4-label">SF 4 — Verliezers bracket</div>
+      <div class="sch-field"><div class="field-dot" style="background:#534AB7"></div><span data-i18n="court4">Baan 10</span></div>
+      <div><span class="sch-badge bp" data-i18n="bracket_losers">Verliezers</span></div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="phase-bar">
+      <span class="phase-bar-title" data-i18n="ko_finals_title">Finales</span>
+      <span class="phase-bar-badge">20:19 – 20:33</span>
+    </div>
+    <div class="sch-header"><div data-i18n="th_time">Tijd</div><div data-i18n="th_match">Wedstrijd</div><div data-i18n="th_court">Baan</div><div data-i18n="th_place">Plek</div></div>
+    <div class="sch-row">
+      <div class="sch-time">20:19</div>
+      <div class="sch-match" id="ko-3rd-label">Verliezersfinale</div>
+      <div class="sch-field"><div class="field-dot" style="background:#F15C22"></div><span data-i18n="court1">Baan 4</span></div>
+      <div><span class="sch-badge bn">3e/4e</span></div>
+    </div>
+    <div class="sch-row">
+      <div class="sch-time"></div>
+      <div class="sch-match" id="ko-consol-label">Troostfinale</div>
+      <div class="sch-field"><div class="field-dot" style="background:#000639"></div><span data-i18n="court2">Baan 6</span></div>
+      <div><span class="sch-badge bp">5e/6e</span></div>
+    </div>
+    <div class="sch-row">
+      <div class="sch-time"></div>
+      <div class="sch-match" id="ko-78-label">Finale plek 7-8</div>
+      <div class="sch-field"><div class="field-dot" style="background:#1a8f5e"></div><span data-i18n="court3">Baan 8</span></div>
+      <div><span class="sch-badge bp">7e/8e</span></div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="phase-bar">
+      <span class="phase-bar-title" data-i18n="ko_grandfinal_title">Grote Finale</span>
+      <span class="phase-bar-badge">20:33 – 20:47</span>
+    </div>
+    <div class="sch-header"><div data-i18n="th_time">Tijd</div><div data-i18n="th_match">Wedstrijd</div><div data-i18n="th_court">Baan</div><div data-i18n="th_place">Plek</div></div>
+    <div class="sch-row" style="background:#FEE9DF">
+      <div class="sch-time" style="color:var(--orange)">20:33</div>
+      <div class="sch-match" id="ko-final-label"><strong>Grote Finale</strong></div>
+      <div class="sch-field"><div class="field-dot" style="background:#F15C22"></div><span data-i18n="court1">Baan 4</span></div>
+      <div><span class="sch-badge bo">1e/2e</span></div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--text3);text-align:center;margin-top:-4px;margin-bottom:12px" data-i18n="ko_grandfinal_note">De Grote Finale wordt als laatste gespeeld, alleen op Baan 4 — zodat iedereen kan toekijken</p>
+
+  <div style="text-align:center;font-size:12px;color:var(--text3);margin-top:10px;padding:6px" data-i18n="ko_closing">
+    Uitreiking &amp; afsluiting rond <strong style="color:var(--navy)">20:52</strong> — daarna nazitten in de horeca
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="section-label" data-i18n="final_standing_label">Eindrangschikking</div>
+    <div style="font-size:13px;line-height:2;color:var(--text2)" data-i18n="final_standing_body">
+      1e — Winnaar grote finale<br>
+      2e — Verliezer grote finale<br>
+      3e — Winnaar verliezersfinale (verliezers SF1 &amp; SF2)<br>
+      4e — Verliezer verliezersfinale (verliezers SF1 &amp; SF2)<br>
+      5e — Winnaar troostfinale (winnaars SF3 &amp; SF4)<br>
+      6e — Verliezer troostfinale (winnaars SF3 &amp; SF4)<br>
+      7e — Winnaar finale plek 7-8 (verliezers SF3 &amp; SF4)<br>
+      8e — Verliezer finale plek 7-8 (verliezers SF3 &amp; SF4)
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ RACKET POLL -->
+<div id="page-rma" class="page">
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="section-label" data-i18n="rma_howto_label">Hoe werkt afmelden?</div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.7" data-i18n="rma_howto_body">Deze functie is momenteel niet actief. Kan je team, of kan jij persoonlijk, er toch niet bij zijn op 25 juni? Neem dan rechtstreeks contact op met de organisatie.</p>
+  </div>
+
+  <!-- TEAM AFMELDEN -->
+  <div class="card" style="margin-bottom:12px">
+    <div class="section-label" data-i18n="rma_team_label">Team afmelden</div>
+    <div class="team-row" style="border-bottom:none;padding-bottom:8px">
+      <select id="rma-team-select" disabled style="flex:1;font-size:13px;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);color:var(--text3);font-family:inherit;cursor:not-allowed">
+        <option value="" data-i18n="rma_team_choose">— Kies je team —</option>
+      </select>
+    </div>
+    <input type="password" id="rma-team-code" disabled placeholder="Afmeldcode (opvragen bij organisatie)" data-i18n-placeholder="rma_code_placeholder" maxlength="6" style="width:100%;font-size:13px;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);color:var(--text3);font-family:inherit;margin-top:6px;cursor:not-allowed" />
+    <div class="modal-error" id="rma-team-error" style="display:none" data-i18n="rma_error">Onjuiste afmeldcode. Vraag de juiste code op bij de organisatie.</div>
+    <button class="primary" disabled style="margin-top:12px;background:var(--text3);cursor:not-allowed;opacity:0.6" onclick="submitRmaAfmelding()" data-i18n="rma_team_btn">✕ Team afmelden</button>
+  </div>
+
+  <!-- PERSOON AFMELDEN -->
+  <div class="card" style="margin-bottom:12px">
+    <div class="section-label" data-i18n="rma_person_label">Persoon afmelden</div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:8px" data-i18n="rma_person_body">Kun jij persoonlijk niet, maar speelt je teamgenoot wel verder? Meld jezelf hieronder af.</p>
+    <input type="text" id="rma-person-name" disabled placeholder="Jouw naam" data-i18n-placeholder="rma_person_placeholder" style="width:100%;font-size:13px;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);color:var(--text3);font-family:inherit;margin-bottom:6px;cursor:not-allowed" />
+    <input type="password" id="rma-person-code" disabled placeholder="Afmeldcode (opvragen bij organisatie)" data-i18n-placeholder="rma_code_placeholder" maxlength="6" style="width:100%;font-size:13px;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);color:var(--text3);font-family:inherit;cursor:not-allowed" />
+    <div class="modal-error" id="rma-person-error" style="display:none" data-i18n="rma_error">Onjuiste afmeldcode. Vraag de juiste code op bij de organisatie.</div>
+    <button class="primary" disabled style="margin-top:12px;background:var(--text3);cursor:not-allowed;opacity:0.6" onclick="submitPersonAfmelding()" data-i18n="rma_person_btn">✕ Persoon afmelden</button>
+  </div>
+
+  <!-- HUIDIGE STATUS -->
+  <div class="card" id="rma-status-card" style="display:none">
+    <div class="section-label" data-i18n="rma_status_label">Huidige status</div>
+    <div style="text-align:center;margin-bottom:6px">
+      <div style="font-size:15px;font-weight:800;color:var(--navy)" id="rma-status-teamname"></div>
+      <div style="font-size:12px;color:var(--text3)" id="rma-status-date"></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0;margin:20px 0">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">✓</div>
+        <span style="font-size:11px;color:var(--text2);font-weight:600" data-i18n="rma_status_received">Ontvangen</span>
+      </div>
+      <div style="width:60px;height:2px;background:var(--orange)"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">⏳</div>
+        <span style="font-size:11px;color:var(--text2);font-weight:600" data-i18n="rma_status_processing">In behandeling</span>
+      </div>
+      <div style="width:60px;height:2px;background:var(--coral)"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">✕</div>
+        <span style="font-size:11px;color:var(--text2);font-weight:600" data-i18n="rma_status_done">Afgemeld</span>
+      </div>
+    </div>
+    <div style="background:var(--coral-light);border-left:3px solid var(--coral);border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--coral);margin-bottom:14px" data-i18n="rma_status_note">
+      Je afmelding is geregistreerd en wordt verwerkt door de organisatie. Neem contact op als dit niet klopt.
+    </div>
+    <button class="secondary" disabled style="cursor:not-allowed;opacity:0.6" onclick="alert('Deze functie is nog niet beschikbaar.')" data-i18n="rma_gen_doc">📄 Genereer afmeldingsdocument</button>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="section-label" data-i18n="rma_overview_label">Overzicht alle teams</div>
+    <table class="stand-table">
+      <thead><tr><th data-i18n="th_pool">Poule</th><th data-i18n="th_team">Team</th><th data-i18n="th_status">Status</th></tr></thead>
+      <tbody id="rma-overview"></tbody>
+    </table>
+  </div>
+
+  <div class="card" id="rma-person-overview-card" style="margin-top:12px;display:none">
+    <div class="section-label" data-i18n="rma_person_overview_label">Afgemelde personen</div>
+    <table class="stand-table">
+      <thead><tr><th data-i18n="th_name">Naam</th><th data-i18n="th_date">Datum</th></tr></thead>
+      <tbody id="rma-person-overview"></tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script type="module">
+  // ── Firebase setup: gedeelde, live-gesynchroniseerde opslag voor het hele toernooi ──
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA4oy8Qp-rhlyY25sATiJg530uESPU1FAM",
+    authDomain: "dsit-padeltoernooi-2026.firebaseapp.com",
+    projectId: "dsit-padeltoernooi-2026",
+    storageBucket: "dsit-padeltoernooi-2026.firebasestorage.app",
+    messagingSenderId: "553013891292",
+    appId: "1:553013891292:web:40a80dc1d504b4fcc16419"
+  };
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore(firebaseApp);
+  const tournamentDocRef = doc(db, "padeltoernooi", "state");
+
+  // Globaal beschikbaar maken zodat het hoofdscript (niet-module) erbij kan
+  window.__firestore = { db, tournamentDocRef, setDoc, onSnapshot };
+</script>
+
+<script>
+const KEY='dsit-padel-v5';
+const dA=['Davey en Jeroen','Jessica','Stijn en Franka','Gregory en Rafal','Anne en Camelia'];
+
+// Invallers voor Jessica per ronde (index 1 in teamsA)
+// R1: Davey en Jeroen, R2: Stijn en Franka, R3: rust, R4: Eline, R5: Angela
+const JESSICA_INVALLERS = {
+  'a-r0': 'Jessica + <span style="color:#DC2626;font-weight:700">Davey (invaller)</span>',
+  'a-r1': 'Jessica + <span style="color:#DC2626;font-weight:700">Lody (invaller)</span>',
+  'a-r2': null, // rust
+  'a-r3': 'Jessica + <span style="color:#DC2626;font-weight:700">Eline (invaller)</span>',
+  'a-r4': 'Jessica + <span style="color:#DC2626;font-weight:700">Angela (invaller)</span>',
+};
+const dB=['Angela en Nick','Ralf en Famke','Luuk en Eline','Maurits en Lody','Tom en Martijn'];
+const FIELD_C=['#F15C22','#000639','#1a8f5e','#534AB7'];
+const FIELD_N=['Baan 4','Baan 6','Baan 8','Baan 10'];
+
+let state={teamsA:[...dA],teamsB:[...dB],scores:{},passwords:{},rma:{},personAfmeldingen:{}};
+let saveTimer=null;
+let unlockedMatch=null; // huidige match die ontgrendeld is voor invoer
+let pendingUnlockKey=null; // key die wacht op wachtwoord-bevestiging
+
+/* ── Round-robin schema voor 5 teams (circle method) ──
+   5 teams = 5 ronden, in elke ronde rust er 1 team.
+   Resultaat: elk team speelt precies 4 wedstrijden, max 1 per ronde. */
+function roundRobinSchedule(n){
+  const teams=Array.from({length:n},(_,i)=>i);
+  const rounds=[];
+  const hasBye = n%2!==0;
+  const arr = hasBye? [...teams,'BYE'] : [...teams];
+  const total = arr.length;
+  const half = total/2;
+  let rot = [...arr];
+  for(let r=0;r<total-1;r++){
+    const round=[];
+    for(let i=0;i<half;i++){
+      const t1=rot[i], t2=rot[total-1-i];
+      if(t1!=='BYE'&&t2!=='BYE') round.push([t1,t2]);
+    }
+    rounds.push(round);
+    // rotate: keep first fixed, rotate rest
+    const fixed=rot[0];
+    const rest=rot.slice(1);
+    rest.unshift(rest.pop());
+    rot=[fixed,...rest];
+  }
+  return rounds; // array of rounds, each round = array of [teamIdxA, teamIdxB]
+}
+
+const ROUNDS_A = roundRobinSchedule(5);
+// Poule B: handmatig schema zodat Tom & Martijn (4) rust heeft in Ronde 1
+// en elke combinatie precies 1x voorkomt
+const ROUNDS_B = [
+  [[0,1],[2,3]], // R1: AN vs RF, LE vs ML, rust: TM
+  [[0,2],[1,4]], // R2: AN vs LE, RF vs TM, rust: ML
+  [[0,3],[2,4]], // R3: AN vs ML, LE vs TM, rust: RF
+  [[0,4],[1,3]], // R4: AN vs TM, RF vs ML, rust: LE
+  [[1,2],[3,4]], // R5: RF vs LE, ML vs TM, rust: AN
+];
+
+let firestoreReady=false;
+let isApplyingRemoteUpdate=false;
+
+function waitForFirestore(callback){
+  if(window.__firestore){ callback(); return; }
+  let tries=0;
+  const interval=setInterval(()=>{
+    tries++;
+    if(window.__firestore){
+      clearInterval(interval);
+      callback();
+    }else if(tries>50){ // ~5 seconden geprobeerd, dan opgeven en lokaal verder
+      clearInterval(interval);
+      setSyncStatus('error','Geen verbinding — lokaal');
+      ensurePasswords();
+      renderAll();
+      renderGroupSchedule();
+    }
+  },100);
+}
+
+function load(){
+  setSyncStatus('saving','Verbinden...');
+  waitForFirestore(()=>{
+    const { tournamentDocRef, onSnapshot } = window.__firestore;
+    onSnapshot(tournamentDocRef, (snapshot)=>{
+      if(snapshot.exists()){
+        isApplyingRemoteUpdate=true;
+        const remote=snapshot.data();
+        state={...state,...remote};
+        ensurePasswords();
+        renderAll();
+        renderGroupSchedule();
+        isApplyingRemoteUpdate=false;
+      }else{
+        // Eerste keer dat de app draait: nog geen document in Firestore, dus zelf aanmaken
+        ensurePasswords();
+        renderAll();
+        renderGroupSchedule();
+        save();
+      }
+      setSyncStatus('ok','Live gesynchroniseerd');
+      firestoreReady=true;
+    }, (error)=>{
+      setSyncStatus('error','Fout bij synchroniseren');
+      console.error('Firestore fout:', error);
+    });
+  });
+}
+
+function save(){
+  if(isApplyingRemoteUpdate) return; // voorkom een lus: niet terugschrijven wat we net van Firestore ontvingen
+  setSyncStatus('saving','Opslaan...');
+  if(!window.__firestore){
+    setSyncStatus('error','Geen verbinding');
+    return;
+  }
+  const { tournamentDocRef, setDoc } = window.__firestore;
+  setDoc(tournamentDocRef, state)
+    .then(()=>setSyncStatus('ok','Live gesynchroniseerd'))
+    .catch((error)=>{
+      setSyncStatus('error','Fout bij opslaan');
+      console.error('Firestore opslaan fout:', error);
+    });
+}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(save,600);}
+function setSyncStatus(s,msg){
+  document.getElementById('sync-dot').className='dot'+(s!=='ok'?' '+s:'');
+  document.getElementById('sync-label').textContent=msg;
+}
+
+function getPairs(n){const p=[];for(let a=0;a<n;a++)for(let b=a+1;b<n;b++)p.push([a,b]);return p;}
+
+function addMin(base,mins){
+  const[h,m]=base.split(':').map(Number);
+  const t=h*60+m+mins;
+  return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+}
+
+/* ── Genereer / behoud unieke 4-cijferige wachtwoorden per wedstrijd ── */
+/* Vaste wachtwoorden per wedstrijd-key, zodat ze op elk apparaat identiek zijn */
+const TRANSLATIONS = {
+  nl: {
+    nav_welkom: "Welkom",
+    nav_spelregels: "Spelregels",
+    nav_teams: "Teams",
+    nav_programma: "Programma",
+    nav_scores: "Scores",
+    nav_stand: "Stand",
+    nav_knockout: "Knockout",
+    nav_rma: "RMA",
+    hdr_title: "Intern Padel Toernooi",
+    hdr_date: "DO 25-06-2026 · 18:00–21:00",
+
+    hero_tagline: '<span class="ul-orange">Eerlijk</span>, <span class="ul-orange">echt</span> en <span class="ul-orange">enthousiast</span><br>op de Padelbaan',
+    hero_chip_date: "Donderdag 25-06-2026",
+    hero_chip_time: "18:00 – 21:00 uur",
+    hero_chip_loc: "Plaza Padel Almelo",
+
+    info1_title: "9 teams",
+    info1_body: "We verdelen iedereen in koppels over twee poules: Poule A met 4 teams en Poule B met 5 teams. Samen spelen, samen lachen.",
+    info2_title: "14 minuten per wedstrijd",
+    info2_body: "Geen sets maar legs tot en met 40 punten. Als de bel gaat is de wedstrijd voorbij — de stand op dat moment telt.",
+    info3_title: "Iedereen speelt finales",
+    info3_body: "Na de groepsfase volgt voor iedereen een knockout-wedstrijd — van de top tot de staart van de ranglijst.",
+    info4_title: "Afsluiting met een drankje",
+    info4_body: "Na de laatste finale vieren we de winnaars en sluiten we de avond gezellig af op de baan.",
+
+    loc_title: "Plaza Padel Almelo",
+    loc_subtitle: "Onze locatie voor het toernooi",
+    loc_p1: 'We spelen dit jaar bij <strong>Plaza Padel Almelo</strong>, een van de modernste padelclubs van Twente. Sinds de opening in 2025 is deze locatie aan de César Franckstraat al razendsnel uitgegroeid tot het padel-hart van de regio — met liefst <strong>10 indoorbanen</strong> onder één dak, opgericht door zevenvoudig Nederlands kampioen Bram Meijer.',
+    loc_p2: "Voor onze 4 gereserveerde banen betekent dit: een lichte, sfeervolle hal, professionele banen en alle ruimte om met collega's een avond vol sport en gezelligheid te beleven. Na het laatste punt kun je in de horecagelegenheid nog even nazitten met een drankje.",
+    loc_addr: "César Franckstraat 7a-14, 7604 JE Almelo",
+    loc_parking: "Voldoende parkeergelegenheid aanwezig",
+    loc_courts: "10 indoorbanen — wij spelen op 4 banen tegelijk",
+
+    dsit_label: "Over DSIT",
+    dsit_body: "DSIT is specialist in server- en patchkasten en levert al jaren aan groothandelaren, installateurs en IT-professionals door heel Europa, vanuit eigen voorraad in Almelo. Vandaag ruilen we het magazijn even in voor de padelbaan — tijd om elkaar op een andere manier te leren kennen!",
+
+    rules_subtitle: "Voor beginners én gevorderden",
+    rules_title: "Padel spelregels",
+
+    video_title: "Liever een filmpje kijken?",
+    video_body: "Bekijk in 2 minuten hoe padel precies werkt",
+    video_link: "Bekijk video →",
+
+    basics_title: "Zo werkt padel — de basisregels",
+    basics_1: "<strong>2 tegen 2.</strong> Padel is altijd dubbelspel. Je speelt dus altijd met een vaste partner samen.",
+    basics_2: "<strong>Opslag.</strong> De opslag is altijd onderhands (van onderaf), na één stuit op de grond. Je slaat diagonaal naar het servicevak van de tegenstander.",
+    basics_3: "<strong>De wand is je vriend.</strong> Na de bounce mag de bal van de glazen wand afkaatsen. Je kunt hem dan nog steeds terugspelen. Dit maakt padel uniek!",
+    basics_4: "<strong>Let op:</strong> de bal mag maar <em>één keer</em> stuiteren voordat jij hem terugslaat. Stuitert hij twee keer? Dan is het punt voorbij voor de tegenstander.",
+    basics_5: "<strong>Out.</strong> Valt de bal buiten het speelveld, of raakt hij de wand zonder eerst te stuiteren? Dan is het out en verlies je het punt.",
+
+    scoring_title: "Puntentelling — wij spelen legs",
+    scoring_intro: "Tijdens dit toernooi spelen we <strong>alleen legs tot en met 40 punten</strong> — geen volledige sets. Dit is hoe een leg wordt opgebouwd:",
+    scoring_love: "Love",
+    scoring_1pt: "1 punt",
+    scoring_2pt: "2 punten",
+    scoring_40: "3 punten",
+    scoring_won: "Leg gewonnen*",
+    scoring_suddendeath: 'Bij <strong>40-40</strong> (gelijke stand) speel je het volgende punt als <strong>"sudden death"</strong>: wie dat punt wint, wint de leg. Zo blijft het tempo hoog en kun je binnen 14 minuten meerdere legs spelen.',
+    scoring_winrule: "Elke gewonnen leg = 1 punt voor jouw team. <strong>Wie de meeste legs heeft als de bel gaat, wint de wedstrijd.</strong>",
+
+    standing_title: "Hoe wordt de stand in de poule bepaald?",
+    standing_intro: "Voor de eindstand in de groepsfase telt niet alleen winst of verlies, maar ook hoeveel legs je hebt gewonnen en tegen gekregen. Zo bepalen we de volgorde:",
+    standing_win: "Punten bij winst",
+    standing_draw: "Punt bij gelijkspel (elk team)",
+    standing_loss: "Punten bij verlies",
+    standing_tiebreak_intro: "Staan teams in de poule gelijk op punten? Dan wordt de volgorde zo bepaald:",
+    standing_tb1: "<strong>1. Legs-saldo</strong> — het totaal aantal gewonnen legs minus het aantal tegen gekregen legs over alle wedstrijden in de poule. Wie het hoogste saldo heeft, staat hoger.",
+    standing_tb2: "<strong>2. Onderlinge uitslag</strong> — staat het legs-saldo ook gelijk? Dan telt wie de directe wedstrijd tussen die teams heeft gewonnen.",
+    standing_tb3: "<strong>3. Beslissende leg</strong> — staat alles nog steeds gelijk (punten, saldo én onderlinge uitslag)? Dan wordt er één winnende leg gespeeld tussen de betreffende teams om de volgorde te bepalen. Hierdoor kan het programma iets uitlopen.",
+    standing_highlight: "Houd dus niet alleen je gewonnen wedstrijden in de gaten, maar ook je gewonnen legs — die kunnen het verschil maken in de eindstand!",
+
+    timing_title: "Tijd & toernooi-opzet",
+    timing_1: "Elke wedstrijd duurt exact <strong>14 minuten</strong> — daarna gaat de bel en is de wedstrijd voorbij",
+    timing_2: "De stand op dat moment (aantal gewonnen legs) bepaalt de winnaar",
+    timing_3: "Staat het gelijk? Dan telt het puntenverschil binnen de laatste leg, of beslist de organisatie op de baan",
+    timing_4: "Na elke wedstrijd is er <strong>5 minuten overbrugging</strong> om van baan te wisselen en op te warmen",
+    timing_5: "Je speelt <strong>4 wedstrijden</strong> in de groepsfase — steeds maximaal 1 wedstrijd per ronde",
+    timing_highlight: "<strong>Onthoud:</strong> geen sets, alleen legs tot en met 40 punten — en de klok bepaalt wanneer het klaar is. Blijf dus altijd scherp, ook als je achter staat!",
+
+    withdraw_title: "Afmelden voor of tijdens het toernooi",
+    withdraw_body: "Meldt een team zich af — vóór het toernooi begint of tussentijds tijdens de groepsfase — dan verliest dat team automatisch al zijn <strong>nog te spelen wedstrijden met 3-0</strong>. Zo blijft de stand voor alle andere teams eerlijk en correct, ook als een team niet alle wedstrijden kan voltooien.",
+    withdraw_highlight: "Wil je je team afmelden? Ga naar het tabblad <strong>RMA</strong> en volg de instructies daar.",
+
+    tips_title: "Gouden tips voor beginners",
+    tips_1: '<strong>Communiceer!</strong> Roep "jij!" of "ik!" zodat jullie niet allebei naar dezelfde bal rennen (of allebei weg). Communicatie wint wedstrijden.',
+    tips_2: "<strong>Gebruik de achterwand.</strong> Als de bal moeilijk is, laat hem dan van de achterwand afkaatsen en speel hem terug. Dat is geen zwakte, dat is slim padel!",
+    tips_3: "<strong>Naar het net!</strong> Na de opslag lopen beide spelers richting het net. Vanuit het net speel je aanvallender en maak je meer kans op een punt.",
+    tips_4: "<strong>De lob.</strong> Een hoge bal over de tegenstanders heen is een van de sterkste wapens in padel. Ze moeten naar achteren en jij neemt het net over!",
+    tips_5: "<strong>Geniet ervan.</strong> Padel is een sociaal spel. Iedereen begint ooit als beginner. Fouten maken hoort erbij — lachen mag altijd.",
+
+    teams_label: "Teams",
+    pool_a: "Poule A",
+    pool_b: "Poule B",
+
+    courts_legend: "Banen legenda",
+    court1: "Baan 4",
+    court2: "Baan 6",
+    court3: "Baan 8",
+    court4: "Baan 10",
+    groupphase_title: "Groepsfase",
+    break_text: "19:45 – 20:00 · Pauze &amp; nieuwe indeling knockout",
+    break_sub: "Organisatie maakt de knockout-indeling bekend op basis van de stand",
+    programma_footer: "Bekijk de volledige knockout-fase (halve finales &amp; finales) op het tabblad <strong>Knockout</strong> →",
+
+    scores_howto_label: "Hoe werkt het invullen?",
+    scores_howto_body: "Elke wedstrijd heeft een eigen <strong>4-cijferig wachtwoord</strong>. Vraag dit aan de organisatie op de baan. Zodra je het wachtwoord invult kun je de score van die wedstrijd aanpassen. Wil je later nog iets wijzigen? Dan vul je het wachtwoord opnieuw in.",
+    ko_section_label: "Knockout-fase",
+
+    modal_title: "Wachtwoord voor deze wedstrijd",
+    modal_body: "Vraag het wachtwoord aan de organisatie om de score van deze wedstrijd in te vullen.",
+    modal_error: "Onjuist wachtwoord, probeer het opnieuw.",
+    modal_cancel: "Annuleren",
+    modal_confirm: "Bevestigen",
+
+    th_team: "Team",
+    th_gesp: "Gesp.",
+    th_saldo: "Saldo",
+    th_time: "Tijd",
+    th_match: "Wedstrijd",
+    th_court: "Baan",
+    th_type: "Type",
+    th_place: "Plek",
+    th_pool: "Poule",
+    th_status: "Status",
+    th_name: "Naam",
+    th_date: "Datum",
+
+    swipe_hint: "← swipe voor alle kolommen →",
+    legend_label: "Legenda",
+    legend_body: "Gesp. = wedstrijden gespeeld · W = gewonnen · G = gelijkspel · V = verloren · Ptn = punten · GL = gewonnen legs · TL = tegen legs · Saldo = GL − TL",
+    legend_orange: "Oranje (1e &amp; 2e) → <strong>winnaars bracket</strong>",
+    legend_purple: "Paars (3e &amp; 4e) → <strong>verliezers bracket</strong>",
+    legend_coral: "Rood (5e) → <strong>verliezersfinale</strong>",
+    tiebreak_info: '<strong>Hoe wordt de volgorde bepaald bij gelijke punten?</strong><br>1) Eerst het hoogste aantal <strong>gewonnen legs (GL)</strong> in de poule.<br>2) Staat dat ook gelijk? Dan telt de <strong>onderlinge uitslag</strong> tussen die teams.<br>3) Nog steeds gelijk? Dan wordt een <strong>beslissende leg</strong> gespeeld tussen de betreffende teams. Het programma kan hierdoor iets uitlopen.',
+
+    ko_semis_title: "Halve finales",
+    ko_finals_title: "Finales",
+    ko_grandfinal_title: "Grote Finale",
+    ko_grandfinal_note: "De Grote Finale wordt als laatste gespeeld, alleen op Baan 4 — zodat iedereen kan toekijken",
+    ko_closing: 'Uitreiking &amp; afsluiting rond <strong style="color:var(--navy)">20:52</strong> — daarna nazitten in de horeca',
+    bracket_winners: "Winnaars",
+    bracket_losers: "Verliezers",
+
+    final_standing_label: "Eindrangschikking",
+    final_standing_body: "1e — Winnaar grote finale<br>2e — Verliezer grote finale<br>3e — Winnaar verliezersfinale (verliezers SF1 &amp; SF2)<br>4e — Verliezer verliezersfinale (verliezers SF1 &amp; SF2)<br>5e — Winnaar troostfinale (winnaars SF3 &amp; SF4)<br>6e — Verliezer troostfinale (winnaars SF3 &amp; SF4)<br>7e — Winnaar finale plek 7-8 (verliezers SF3 &amp; SF4)<br>8e — Verliezer finale plek 7-8 (verliezers SF3 &amp; SF4)",
+
+    rma_howto_label: "Hoe werkt afmelden?",
+    rma_howto_body: "Deze functie is momenteel niet actief. Kan je team, of kan jij persoonlijk, er toch niet bij zijn op 25 juni? Neem dan rechtstreeks contact op met de organisatie.",
+    rma_team_label: "Team afmelden",
+    rma_team_choose: "— Kies je team —",
+    rma_code_placeholder: "Afmeldcode (opvragen bij organisatie)",
+    rma_error: "Onjuiste afmeldcode. Vraag de juiste code op bij de organisatie.",
+    rma_team_btn: "✕ Team afmelden",
+    rma_person_label: "Persoon afmelden",
+    rma_person_body: "Kun jij persoonlijk niet, maar speelt je teamgenoot wel verder? Meld jezelf hieronder af.",
+    rma_person_placeholder: "Jouw naam",
+    rma_person_btn: "✕ Persoon afmelden",
+    rma_status_label: "Huidige status",
+    rma_status_received: "Ontvangen",
+    rma_status_processing: "In behandeling",
+    rma_status_done: "Afgemeld",
+    rma_status_note: "Je afmelding is geregistreerd en wordt verwerkt door de organisatie. Neem contact op als dit niet klopt.",
+    rma_gen_doc: "📄 Genereer afmeldingsdocument",
+    rma_overview_label: "Overzicht alle teams",
+    rma_person_overview_label: "Afgemelde personen",
+
+    rest_this_round: "Rust deze ronde: ",
+    round_label: "Ronde",
+    unlock_label: "Ontgrendeld",
+    lock_action: "vergrendel",
+    fill_score_btn: "Score invullen",
+    rma_unsubscribed_on: "Afgemeld op ",
+    pool_label: "Poule",
+    ko_sf1_small: "SF 1 — Winnaars bracket",
+    ko_sf2_small: "SF 2 — Winnaars bracket",
+    ko_sf3_small: "SF 3 — Verliezers bracket",
+    ko_sf4_small: "SF 4 — Verliezers bracket",
+    ko_final_vs: "Winnaar SF1 vs Winnaar SF2",
+    ko_final_small: "Grote Finale — plek 1/2",
+    ko_3rd_vs: "Verliezer SF1 vs Verliezer SF2",
+    ko_3rd_small: "Verliezersfinale — plek 3/4",
+    ko_consol_vs: "Winnaar SF3 vs Winnaar SF4",
+    ko_consol_small: "Troostfinale — plek 5/6",
+    ko_78_vs: "Verliezer SF3 vs Verliezer SF4",
+    ko_78_small: "Finale — plek 7/8",
+    ko_last_small: "Poedelfinale — plek 9/10",
+    ko_meta_sf1: "Halve finale 1 — Winnaars bracket",
+    ko_meta_sf2: "Halve finale 2 — Winnaars bracket",
+    ko_meta_sf3: "Halve finale 3 — Verliezers bracket",
+    ko_meta_sf4: "Halve finale 4 — Verliezers bracket",
+    ko_meta_final: "Grote Finale — plek 1/2 (alleen Baan 4, als laatste)",
+    badge_unsubscribed: "Afgemeld",
+    badge_subscribed: "Aangemeld",
+  },
+
+  pl: {
+    nav_welkom: "Witamy",
+    nav_spelregels: "Zasady gry",
+    nav_teams: "Zespoły",
+    nav_programma: "Program",
+    nav_scores: "Wyniki",
+    nav_stand: "Klasyfikacja",
+    nav_knockout: "Faza pucharowa",
+    nav_rma: "Zgłoszenia",
+    hdr_title: "Wewnętrzny Turniej Padla",
+    hdr_date: "CZW 25-06-2026 · 18:00–21:00",
+
+    hero_tagline: '<span class="ul-orange">Uczciwie</span>, <span class="ul-orange">prawdziwie</span> i <span class="ul-orange">entuzjastycznie</span><br>na korcie padla',
+    hero_chip_date: "Czwartek 25-06-2026",
+    hero_chip_time: "18:00 – 21:00",
+    hero_chip_loc: "Plaza Padel Almelo",
+
+    info1_title: "9 zespołów",
+    info1_body: "Dzielimy wszystkich na pary w dwóch grupach: Grupa A z 4 zespołami i Grupa B z 5 zespołami. Razem gramy, razem się śmiejemy.",
+    info2_title: "14 minut na mecz",
+    info2_body: "Bez setów, tylko gemy do 40 punktów włącznie. Gdy zadzwoni dzwonek, mecz się kończy — liczy się aktualny wynik.",
+    info3_title: "Każdy gra finał",
+    info3_body: "Po fazie grupowej każdy gra mecz pucharowy — od czołówki po koniec tabeli.",
+    info4_title: "Zakończenie przy drinku",
+    info4_body: "Po ostatnim finale świętujemy zwycięzców i kończymy wieczór w miłej atmosferze na korcie.",
+
+    loc_title: "Plaza Padel Almelo",
+    loc_subtitle: "Nasza lokalizacja turnieju",
+    loc_p1: 'W tym roku gramy w <strong>Plaza Padel Almelo</strong>, jednym z najnowocześniejszych klubów padla w Twente. Od otwarcia w 2025 roku ten obiekt przy César Franckstraat błyskawicznie stał się sercem padla w regionie — z aż <strong>10 kortami halowymi</strong> pod jednym dachem, założonym przez siedmiokrotnego mistrza Holandii Brama Meijera.',
+    loc_p2: "Na naszych 4 zarezerwowanych kortach oznacza to: jasną, klimatyczną halę, profesjonalne korty i mnóstwo miejsca, by spędzić wieczór pełen sportu i integracji z kolegami. Po ostatnim punkcie można jeszcze posiedzieć przy drinku w strefie gastronomicznej.",
+    loc_addr: "César Franckstraat 7a-14, 7604 JE Almelo",
+    loc_parking: "Wystarczająca ilość miejsc parkingowych",
+    loc_courts: "10 kortów halowych — my gramy na 4 kortach jednocześnie",
+
+    dsit_label: "O DSIT",
+    dsit_body: "DSIT to specjalista w dziedzinie szaf serwerowych i krosowniczych, od lat dostarczający produkty hurtownikom, instalatorom i specjalistom IT w całej Europie, z własnego magazynu w Almelo. Dziś na chwilę zamieniamy magazyn na kort do padla — czas poznać się w inny sposób!",
+
+    rules_subtitle: "Dla początkujących i zaawansowanych",
+    rules_title: "Zasady gry w padla",
+
+    video_title: "Wolisz obejrzeć film?",
+    video_body: "Zobacz w 2 minuty, jak dokładnie działa padel",
+    video_link: "Obejrzyj wideo →",
+
+    basics_title: "Jak działa padel — podstawowe zasady",
+    basics_1: "<strong>2 na 2.</strong> Padel zawsze gra się deblowo. Zawsze grasz więc ze stałym partnerem.",
+    basics_2: "<strong>Serwis.</strong> Serwis zawsze wykonuje się od dołu, po jednym odbiciu piłki od podłoża. Serwujesz po przekątnej do pola serwisowego przeciwnika.",
+    basics_3: "<strong>Ściana jest twoim przyjacielem.</strong> Po odbiciu piłka może odbić się od szklanej ściany. Nadal możesz ją wtedy odegrać. To właśnie czyni padel wyjątkowym!",
+    basics_4: "<strong>Uwaga:</strong> piłka może odbić się od podłoża tylko <em>raz</em>, zanim ją odegrasz. Jeśli odbije się dwa razy? Wtedy punkt zdobywa przeciwnik.",
+    basics_5: "<strong>Aut.</strong> Piłka wypada poza boisko lub trafia w ścianę bez wcześniejszego odbicia od podłoża? Wtedy to aut i tracisz punkt.",
+
+    scoring_title: "Liczenie punktów — gramy w gemy",
+    scoring_intro: "Podczas tego turnieju gramy <strong>tylko gemy do 40 punktów włącznie</strong> — bez pełnych setów. Tak buduje się gem:",
+    scoring_love: "Zero",
+    scoring_1pt: "1 punkt",
+    scoring_2pt: "2 punkty",
+    scoring_40: "3 punkty",
+    scoring_won: "Gem wygrany*",
+    scoring_suddendeath: 'Przy wyniku <strong>40-40</strong> (remis) kolejny punkt gracie w trybie <strong>"nagłej śmierci"</strong>: kto zdobędzie ten punkt, wygrywa gem. Dzięki temu tempo pozostaje wysokie i można rozegrać kilka gemów w ciągu 14 minut.',
+    scoring_winrule: "Każdy wygrany gem = 1 punkt dla twojego zespołu. <strong>Kto ma najwięcej gemów, gdy zadzwoni dzwonek, wygrywa mecz.</strong>",
+
+    standing_title: "Jak ustala się klasyfikację w grupie?",
+    standing_intro: "O klasyfikacji końcowej w fazie grupowej decyduje nie tylko wygrana lub przegrana, ale również liczba zdobytych i straconych gemów. Tak ustalamy kolejność:",
+    standing_win: "Punkty za wygraną",
+    standing_draw: "Punkt za remis (każdy zespół)",
+    standing_loss: "Punkty za przegraną",
+    standing_tiebreak_intro: "Jeśli zespoły w grupie mają tyle samo punktów, kolejność ustala się następująco:",
+    standing_tb1: "<strong>1. Bilans gemów</strong> — łączna liczba zdobytych gemów minus liczba straconych gemów we wszystkich meczach w grupie. Wyższy bilans daje wyższe miejsce.",
+    standing_tb2: "<strong>2. Wynik bezpośredniego meczu</strong> — jeśli bilans gemów też jest równy, decyduje to, kto wygrał bezpośredni mecz między tymi zespołami.",
+    standing_tb3: "<strong>3. Decydujący gem</strong> — jeśli wszystko nadal jest równe (punkty, bilans i wynik bezpośredni)? Wtedy rozgrywany jest jeden decydujący gem między danymi zespołami, by ustalić kolejność. Może to nieznacznie opóźnić program.",
+    standing_highlight: "Obserwuj więc nie tylko wygrane mecze, ale też zdobyte gemy — mogą one zadecydować o klasyfikacji końcowej!",
+
+    timing_title: "Czas i format turnieju",
+    timing_1: "Każdy mecz trwa dokładnie <strong>14 minut</strong> — potem dzwoni dzwonek i mecz się kończy",
+    timing_2: "Wynik w tym momencie (liczba zdobytych gemów) decyduje o zwycięzcy",
+    timing_3: "Remis? Wtedy liczy się różnica punktów w ostatnim gemie, lub decyduje organizacja na korcie",
+    timing_4: "Po każdym meczu jest <strong>5 minut przerwy</strong> na zmianę kortu i rozgrzewkę",
+    timing_5: "W fazie grupowej grasz <strong>4 mecze</strong> — maksymalnie 1 mecz na rundę",
+    timing_highlight: "<strong>Pamiętaj:</strong> bez setów, tylko gemy do 40 punktów włącznie — a zegar decyduje, kiedy koniec. Bądź więc czujny, nawet gdy przegrywasz!",
+
+    withdraw_title: "Rezygnacja przed lub w trakcie turnieju",
+    withdraw_body: "Jeśli zespół zrezygnuje — przed rozpoczęciem turnieju lub w trakcie fazy grupowej — automatycznie przegrywa wszystkie <strong>pozostałe mecze wynikiem 3-0</strong>. Dzięki temu klasyfikacja dla pozostałych zespołów pozostaje sprawiedliwa i prawidłowa, nawet jeśli zespół nie może dokończyć wszystkich meczów.",
+    withdraw_highlight: "Chcesz zrezygnować z udziału swojego zespołu? Przejdź do zakładki <strong>Zgłoszenia</strong> i postępuj zgodnie z instrukcjami.",
+
+    tips_title: "Złote wskazówki dla początkujących",
+    tips_1: '<strong>Komunikuj się!</strong> Krzycz "ty!" albo "ja!", żebyście oboje nie biegli do tej samej piłki (albo żeby żadne z was nie biegło). Komunikacja wygrywa mecze.',
+    tips_2: "<strong>Wykorzystuj tylną ścianę.</strong> Jeśli piłka jest trudna, pozwól jej odbić się od tylnej ściany i odegraj ją. To nie słabość, to mądra gra w padla!",
+    tips_3: "<strong>Idź do siatki!</strong> Po serwisie obaj zawodnicy idą w kierunku siatki. Z siatki grasz bardziej ofensywnie i masz większe szanse na punkt.",
+    tips_4: "<strong>Lob.</strong> Wysoka piłka nad przeciwnikami to jedna z najsilniejszych broni w padlu. Muszą się cofnąć, a ty przejmujesz siatkę!",
+    tips_5: "<strong>Ciesz się grą.</strong> Padel to gra towarzyska. Każdy kiedyś zaczynał jako początkujący. Błędy są częścią gry — śmiech zawsze dozwolony.",
+
+    teams_label: "Zespoły",
+    pool_a: "Grupa A",
+    pool_b: "Grupa B",
+
+    courts_legend: "Legenda kortów",
+    court1: "Kort 4",
+    court2: "Kort 6",
+    court3: "Kort 8",
+    court4: "Kort 10",
+    groupphase_title: "Faza grupowa — 5 rund",
+    break_text: "19:45 – 20:00 · Przerwa i nowy podział fazy pucharowej",
+    break_sub: "Organizacja ogłosi podział fazy pucharowej na podstawie klasyfikacji",
+    programma_footer: "Zobacz pełną fazę pucharową (półfinały i finały) w zakładce <strong>Faza pucharowa</strong> →",
+
+    scores_howto_label: "Jak wypełnić wynik?",
+    scores_howto_body: "Każdy mecz ma własne <strong>4-cyfrowe hasło</strong>. Zapytaj o nie organizację na korcie. Po wpisaniu hasła możesz zmienić wynik tego meczu. Chcesz coś zmienić później? Wpisz hasło ponownie.",
+    ko_section_label: "Faza pucharowa",
+
+    modal_title: "Hasło do tego meczu",
+    modal_body: "Zapytaj organizację o hasło, aby wpisać wynik tego meczu.",
+    modal_error: "Nieprawidłowe hasło, spróbuj ponownie.",
+    modal_cancel: "Anuluj",
+    modal_confirm: "Potwierdź",
+
+    th_team: "Zespół",
+    th_gesp: "Mecze",
+    th_saldo: "Bilans",
+    th_time: "Czas",
+    th_match: "Mecz",
+    th_court: "Kort",
+    th_type: "Typ",
+    th_place: "Miejsce",
+    th_pool: "Grupa",
+    th_status: "Status",
+    th_name: "Imię",
+    th_date: "Data",
+
+    swipe_hint: "← przesuń, aby zobaczyć wszystkie kolumny →",
+    legend_label: "Legenda",
+    legend_body: "Mecze = rozegrane mecze · W = wygrane · R = remis · P = przegrane · Pkt = punkty · ZG = zdobyte gemy · SG = stracone gemy · Bilans = ZG − SG",
+    legend_orange: "Pomarańczowy (1. i 2.) → <strong>drabinka zwycięzców</strong>",
+    legend_purple: "Fioletowy (3. i 4.) → <strong>drabinka przegranych</strong>",
+    legend_coral: "Czerwony (5.) → <strong>finał przegranych</strong>",
+    tiebreak_info: '<strong>Jak ustala się kolejność przy równej liczbie punktów?</strong><br>1) Najpierw najwyższa liczba <strong>zdobytych gemów (ZG)</strong> w grupie.<br>2) Nadal remis? Wtedy decyduje <strong>wynik bezpośredniego meczu</strong> między tymi zespołami.<br>3) Nadal remis? Wtedy rozgrywany jest <strong>decydujący gem</strong> między danymi zespołami. Może to nieznacznie opóźnić program.',
+
+    ko_semis_title: "Półfinały",
+    ko_finals_title: "Finały",
+    ko_grandfinal_title: "Wielki Finał",
+    ko_grandfinal_note: "Wielki Finał zostanie rozegrany jako ostatni, wyłącznie na Korcie 1 — aby każdy mógł go obejrzeć",
+    ko_closing: 'Wręczenie nagród i zakończenie około <strong style="color:var(--navy)">20:52</strong> — potem czas na wspólne posiedzenie w strefie gastronomicznej',
+    bracket_winners: "Zwycięzcy",
+    bracket_losers: "Przegrani",
+
+    final_standing_label: "Klasyfikacja końcowa",
+    final_standing_body: "1. — Zwycięzca wielkiego finału<br>2. — Przegrany wielkiego finału<br>3. — Zwycięzca finału przegranych (przegrani SF1 i SF2)<br>4. — Przegrany finału przegranych (przegrani SF1 i SF2)<br>5. — Zwycięzca finału pocieszenia (zwycięzcy SF3 i SF4)<br>6. — Przegrany finału pocieszenia (zwycięzcy SF3 i SF4)<br>7. — Zwycięzca finału o miejsce 7-8 (przegrani SF3 i SF4)<br>8. — Przegrany finału o miejsce 7-8 (przegrani SF3 i SF4)",
+
+    rma_howto_label: "Jak działa rezygnacja?",
+    rma_howto_body: "Ta funkcja jest obecnie nieaktywna. Twój zespół lub ty osobiście nie możecie jednak wziąć udziału 25 czerwca? Skontaktuj się bezpośrednio z organizacją.",
+    rma_team_label: "Rezygnacja zespołu",
+    rma_team_choose: "— Wybierz swój zespół —",
+    rma_code_placeholder: "Kod rezygnacji (zapytaj organizację)",
+    rma_error: "Nieprawidłowy kod rezygnacji. Zapytaj organizację o właściwy kod.",
+    rma_team_btn: "✕ Zrezygnuj zespołem",
+    rma_person_label: "Rezygnacja osoby",
+    rma_person_body: "Ty osobiście nie możesz, ale twój partner gra dalej? Zgłoś swoją rezygnację poniżej.",
+    rma_person_placeholder: "Twoje imię",
+    rma_person_btn: "✕ Zrezygnuj jako osoba",
+    rma_status_label: "Aktualny status",
+    rma_status_received: "Otrzymano",
+    rma_status_processing: "W trakcie przetwarzania",
+    rma_status_done: "Zrezygnowano",
+    rma_status_note: "Twoja rezygnacja została zarejestrowana i jest przetwarzana przez organizację. Skontaktuj się, jeśli to nieprawidłowe.",
+    rma_gen_doc: "📄 Wygeneruj dokument rezygnacji",
+    rma_overview_label: "Przegląd wszystkich zespołów",
+    rma_person_overview_label: "Osoby, które zrezygnowały",
+
+    rest_this_round: "Pauza w tej rundzie: ",
+    round_label: "Runda",
+    unlock_label: "Odblokowano",
+    lock_action: "zablokuj",
+    fill_score_btn: "Wpisz wynik",
+    rma_unsubscribed_on: "Zrezygnowano dnia ",
+    pool_label: "Grupa",
+    ko_sf1_small: "PF 1 — drabinka zwycięzców",
+    ko_sf2_small: "PF 2 — drabinka zwycięzców",
+    ko_sf3_small: "PF 3 — drabinka przegranych",
+    ko_sf4_small: "PF 4 — drabinka przegranych",
+    ko_final_vs: "Zwycięzca PF1 vs Zwycięzca PF2",
+    ko_final_small: "Wielki Finał — miejsce 1/2",
+    ko_3rd_vs: "Przegrany PF1 vs Przegrany PF2",
+    ko_3rd_small: "Finał przegranych — miejsce 3/4",
+    ko_consol_vs: "Zwycięzca PF3 vs Zwycięzca PF4",
+    ko_consol_small: "Finał pocieszenia — miejsce 5/6",
+    ko_78_vs: "Przegrany PF3 vs Przegrany PF4",
+    ko_78_small: "Finał — miejsce 7/8",
+    ko_last_small: "Finał Pudla — miejsce 9/10",
+    ko_meta_sf1: "Półfinał 1 — drabinka zwycięzców",
+    ko_meta_sf2: "Półfinał 2 — drabinka zwycięzców",
+    ko_meta_sf3: "Półfinał 3 — drabinka przegranych",
+    ko_meta_sf4: "Półfinał 4 — drabinka przegranych",
+    ko_meta_final: "Wielki Finał — miejsce 1/2 (tylko Kort 1, jako ostatni)",
+    badge_unsubscribed: "Zrezygnowano",
+    badge_subscribed: "Zgłoszono",
+  }
+};
+
+const FIXED_PASSWORDS={
+  'a-r0-0':'4943','a-r0-1':'8182',
+  'a-r1-0':'4538','a-r1-1':'4882',
+  'a-r2-0':'2811','a-r2-1':'4416',
+  'a-r3-0':'1866','a-r3-1':'1498',
+  'a-r4-0':'4303','a-r4-1':'3217',
+  'b-r0-0':'5434','b-r0-1':'4168',
+  'b-r1-0':'9758','b-r1-1':'6774',
+  'b-r2-0':'5158','b-r2-1':'9449',
+  'b-r3-0':'5035','b-r3-1':'3503',
+  'b-r4-0':'5930','b-r4-1':'2479',
+  'ko-sf1':'1348','ko-sf2':'8823','ko-sf3':'8307','ko-sf4':'8733',
+  'ko-final':'2338','ko-3rd':'8016','ko-consol':'4890','ko-78':'6656','ko-last':'4523',
+  'rma':'7573',
+};
+
+function ensurePasswords(){
+  state.passwords={...FIXED_PASSWORDS};
+}
+
+function renderGroupSchedule(){
+  const el=document.getElementById('schedule-group');
+  el.innerHTML='';
+  let cumulativeTime='18:15';
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  const maxRounds=Math.max(ROUNDS_A.length, ROUNDS_B.length);
+
+  for(let ri=0; ri<maxRounds; ri++){
+    const roundLabel=document.createElement('div');
+    roundLabel.className='round-label';
+    const startTime=addMin('18:15',ri*19);
+    roundLabel.textContent=`${t.round_label} ${ri+1} — ${startTime}`;
+    el.appendChild(roundLabel);
+
+    const matchesThisRound=[];
+    if(ROUNDS_A[ri]) ROUNDS_A[ri].forEach((pair,mi)=>matchesThisRound.push({pool:'A',pair,mi}));
+    if(ROUNDS_B[ri]) ROUNDS_B[ri].forEach((pair,mi)=>matchesThisRound.push({pool:'B',pair,mi}));
+
+    matchesThisRound.forEach((m,fi)=>{
+      const teams=m.pool==='A'?state.teamsA:state.teamsB;
+      const invallerKey=`a-r${ri}`;
+      let tA=teams[m.pair[0]]||`${m.pool}${m.pair[0]+1}`;
+      let tB=teams[m.pair[1]]||`${m.pool}${m.pair[1]+1}`;
+      if(m.pool==='A'){
+        if(m.pair[0]===1 && JESSICA_INVALLERS[invallerKey]) tA=JESSICA_INVALLERS[invallerKey];
+        if(m.pair[1]===1 && JESSICA_INVALLERS[invallerKey]) tB=JESSICA_INVALLERS[invallerKey];
+      }
+      const fc=FIELD_C[fi%4];
+      const scoreKey=`${m.pool.toLowerCase()}-r${ri}-${m.mi}`;
+      const sc=state.scores[scoreKey];
+      const hasScore=sc && sc[0]!=='' && sc[1]!=='';
+      const row=document.createElement('div');
+      row.className='sch-row'+(hasScore?' sch-row-played':'');
+      row.innerHTML=`
+        <div class="sch-time">${fi===0?startTime:''}</div>
+        <div class="sch-match">${tA} vs ${tB}<small>${t.pool_label} ${m.pool}${hasScore?` · ${sc[0]}-${sc[1]}`:''}</small></div>
+        <div class="sch-field"><div class="field-dot" style="background:${fc}"></div>${FIELD_N[fi%4]}</div>
+        <div><span class="sch-badge" style="background:${m.pool==='A'?'var(--orange-light)':'var(--navy-light)'};color:${m.pool==='A'?'var(--orange-dark)':'var(--navy)'}">${t.pool_label} ${m.pool}</span></div>`;
+      el.appendChild(row);
+    });
+
+    // Toon welke teams deze ronde rust hebben
+    const playingA=ROUNDS_A[ri]?new Set(ROUNDS_A[ri].flat()):new Set();
+    const restingA=state.teamsA.map((_,i)=>i).filter(i=>!playingA.has(i));
+    const playingB=ROUNDS_B[ri]?new Set(ROUNDS_B[ri].flat()):new Set();
+    const restingB=state.teamsB.map((_,i)=>i).filter(i=>!playingB.has(i));
+    if(restingA.length||restingB.length){
+      const restRow=document.createElement('div');
+      restRow.className='sch-row rest-row';
+      const restNames=[
+        ...restingA.map(i=>state.teamsA[i]||`A${i+1}`),
+        ...restingB.map(i=>state.teamsB[i]||`B${i+1}`)
+      ].join(', ');
+      const restLabel=(TRANSLATIONS[currentLang]||TRANSLATIONS.nl).rest_this_round;
+      restRow.innerHTML=`<div></div><div class="sch-match">${restLabel}${restNames}</div><div></div><div></div>`;
+      el.appendChild(restRow);
+    }
+  }
+}
+
+function renderTeamsOverview(){
+  ['a','b'].forEach(pool=>{
+    const teams=pool==='a'?state.teamsA:state.teamsB;
+    const cls=pool==='a'?'na':'nb';
+    const el=document.getElementById('teams-overview-'+pool);
+    if(!el) return;
+    el.innerHTML=teams.map((t,i)=>`<div class="team-overview-row"><span class="team-num ${cls}">${i+1}</span>${t}</div>`).join('');
+  });
+}
+
+/* ── Wachtwoord-beveiligde score-invoer ── */
+function openPwModal(key,label){
+  pendingUnlockKey=key;
+  document.getElementById('pw-modal-text').textContent=`Vraag het wachtwoord voor "${label}" aan de organisatie om de score in te vullen.`;
+  document.getElementById('pw-input').value='';
+  document.getElementById('pw-error').style.display='none';
+  document.getElementById('pw-modal').classList.add('active');
+  setTimeout(()=>document.getElementById('pw-input').focus(),100);
+}
+function closePwModal(){
+  document.getElementById('pw-modal').classList.remove('active');
+  pendingUnlockKey=null;
+}
+function submitPw(){
+  const val=document.getElementById('pw-input').value.trim();
+  if(state.passwords[pendingUnlockKey]===val){
+    unlockedMatch=pendingUnlockKey;
+    closePwModal();
+    renderMatches();
+    renderKO();
+  }else{
+    document.getElementById('pw-error').style.display='block';
+  }
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && document.getElementById('pw-modal').classList.contains('active')) submitPw();
+});
+
+function lockMatch(){
+  unlockedMatch=null;
+  renderMatches();
+  renderKO();
+}
+
+function buildMatchCard(key,teamA,teamB,metaLabel,fieldIdx){
+  const sc=state.scores[key]||['',''];
+  const isUnlocked=unlockedMatch===key;
+  const fc=FIELD_C[fieldIdx%4];
+  const stripHtml=s=>s.replace(/<[^>]*>/g,'');
+  const matchLabel=`${stripHtml(teamA)} vs ${stripHtml(teamB)}`;
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  const div=document.createElement('div');
+  div.className='match-card'+(isUnlocked?'':' locked');
+  div.innerHTML=`
+    <div class="match-header">
+      <span class="match-meta">${metaLabel}</span>
+      <span class="field-tag" style="background:${fc}18;color:${fc}">${FIELD_N[fieldIdx%4]}</span>
+    </div>
+    <div class="match-teams">
+      <span class="match-team">${teamA}</span>
+      <div class="score-wrap">
+        <input type="number" min="0" max="99" value="${sc[0]}" id="s${key}a" oninput="updateScore('${key}')" ${isUnlocked?'':'disabled'} />
+        <span class="vs">–</span>
+        <input type="number" min="0" max="99" value="${sc[1]}" id="s${key}b" oninput="updateScore('${key}')" ${isUnlocked?'':'disabled'} />
+      </div>
+      <span class="match-team r">${teamB}</span>
+    </div>
+    <div class="lock-row">
+      ${isUnlocked
+        ? `<span class="unlocked-tag">${t.unlock_label} — <a href="#" onclick="lockMatch();return false;" style="color:var(--green);text-decoration:underline">${t.lock_action}</a></span>`
+        : `<button class="lock-btn" onclick="openPwModal('${key}', '${matchLabel.replace(/'/g,"\\'")}')">${t.fill_score_btn}</button>`}
+    </div>`;
+  return div;
+}
+
+function renderMatches(){
+  const el=document.getElementById('matches-by-round');
+  el.innerHTML='';
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  const maxRounds=Math.max(ROUNDS_A.length, ROUNDS_B.length);
+
+  for(let ri=0; ri<maxRounds; ri++){
+    const roundBlock=document.createElement('div');
+    roundBlock.className='schedule-block';
+    roundBlock.style.marginBottom='14px';
+
+    const bar=document.createElement('div');
+    bar.className='phase-bar';
+    bar.innerHTML=`<span class="phase-bar-title">${t.round_label} ${ri+1}</span><span class="phase-bar-badge">${addMin('18:15',ri*19)}</span>`;
+    roundBlock.appendChild(bar);
+
+    const cardsWrap=document.createElement('div');
+    cardsWrap.style.padding='12px';
+
+    let fieldCounter=0;
+
+    if(ROUNDS_A[ri]) ROUNDS_A[ri].forEach((pair,mi)=>{
+      const[a,b]=pair;
+      const key=`a-r${ri}-${mi}`;
+      const invallerKey=`a-r${ri}`;
+      const nameA = a===1 && JESSICA_INVALLERS[invallerKey] ? JESSICA_INVALLERS[invallerKey] : state.teamsA[a];
+      const nameB = b===1 && JESSICA_INVALLERS[invallerKey] ? JESSICA_INVALLERS[invallerKey] : state.teamsA[b];
+      const card=buildMatchCard(key,nameA,nameB,t.pool_a,fieldCounter);
+      cardsWrap.appendChild(card);
+      fieldCounter++;
+    });
+
+    if(ROUNDS_B[ri]) ROUNDS_B[ri].forEach((pair,mi)=>{
+      const[a,b]=pair;
+      const key=`b-r${ri}-${mi}`;
+      const card=buildMatchCard(key,state.teamsB[a],state.teamsB[b],t.pool_b,fieldCounter);
+      cardsWrap.appendChild(card);
+      fieldCounter++;
+    });
+
+    // Rust-info voor deze ronde
+    const playingA=ROUNDS_A[ri]?new Set(ROUNDS_A[ri].flat()):new Set();
+    const restingA=state.teamsA.map((_,i)=>i).filter(i=>!playingA.has(i));
+    const playingB=ROUNDS_B[ri]?new Set(ROUNDS_B[ri].flat()):new Set();
+    const restingB=state.teamsB.map((_,i)=>i).filter(i=>!playingB.has(i));
+    if(restingA.length||restingB.length){
+      const restNames=[
+        ...restingA.map(i=>state.teamsA[i]||`A${i+1}`),
+        ...restingB.map(i=>state.teamsB[i]||`B${i+1}`)
+      ].join(', ');
+      const restNote=document.createElement('p');
+      restNote.style.cssText='font-size:11px;color:var(--text3);text-align:center;margin-top:4px;font-style:italic';
+      const restLabel2=(TRANSLATIONS[currentLang]||TRANSLATIONS.nl).rest_this_round;
+      restNote.textContent=`${restLabel2}${restNames}`;
+      cardsWrap.appendChild(restNote);
+    }
+
+    roundBlock.appendChild(cardsWrap);
+    el.appendChild(roundBlock);
+  }
+}
+
+function renderKoMatches(){
+  const el=document.getElementById('matches-ko');
+  el.innerHTML='';
+  const sA=calcStand(state.teamsA,'a');
+  const sB=calcStand(state.teamsB,'b');
+  const nm=(arr,i)=>arr[i]?.name||'?';
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+
+  const koList=[
+    {key:'ko-sf1', label:`${nm(sA,0)} vs ${nm(sB,1)}`, meta:t.ko_meta_sf1, field:0},
+    {key:'ko-sf2', label:`${nm(sB,0)} vs ${nm(sA,1)}`, meta:t.ko_meta_sf2, field:1},
+    {key:'ko-sf3', label:`${nm(sA,2)} vs ${nm(sB,3)}`, meta:t.ko_meta_sf3, field:2},
+    {key:'ko-sf4', label:`${nm(sB,2)} vs ${nm(sA,3)}`, meta:t.ko_meta_sf4, field:3},
+    {key:'ko-3rd', label:t.ko_3rd_vs, meta:t.ko_3rd_small, field:0},
+    {key:'ko-consol', label:t.ko_consol_vs, meta:t.ko_consol_small, field:1},
+    {key:'ko-78', label:t.ko_78_vs, meta:t.ko_78_small, field:2},
+    {key:'ko-final', label:t.ko_final_vs, meta:t.ko_meta_final, field:0},
+  ];
+
+  koList.forEach(m=>{
+    const[teamA,teamB]=m.label.split(' vs ');
+    const card=buildMatchCard(m.key,teamA,teamB,m.meta,m.field);
+    el.appendChild(card);
+  });
+}
+
+function updateScore(key){
+  state.scores[key]=[
+    document.getElementById('s'+key+'a').value,
+    document.getElementById('s'+key+'b').value
+  ];
+  renderGroupSchedule();
+  scheduleSave();
+}
+
+function calcStand(teams,pool){
+  const rounds=pool==='a'?ROUNDS_A:ROUNDS_B;
+  const st=teams.map(t=>({name:t,played:0,w:0,g:0,v:0,pts:0,legsFor:0,legsAgainst:0}));
+  // matrix voor onderlinge uitslagen: results[i][j] = punten die team i behaalde tegen team j (legs-saldo)
+  const headToHead={};
+
+  rounds.forEach((round,ri)=>{
+    round.forEach((pair,mi)=>{
+      const[a,b]=pair;
+      const key=`${pool}-r${ri}-${mi}`;
+      const sc=state.scores[key];
+      if(!sc||sc[0]===''||sc[1]==='')return;
+      const sa=parseInt(sc[0]),sb=parseInt(sc[1]);
+
+      st[a].played++; st[b].played++;
+      st[a].legsFor+=sa; st[a].legsAgainst+=sb;
+      st[b].legsFor+=sb; st[b].legsAgainst+=sa;
+
+      if(sa>sb){ st[a].w++; st[a].pts+=3; st[b].v++; }
+      else if(sb>sa){ st[b].w++; st[b].pts+=3; st[a].v++; }
+      else{ st[a].g++; st[a].pts+=1; st[b].g++; st[b].pts+=1; }
+
+      // Onthoud onderlinge uitslag (legs-saldo) tussen deze twee teams
+      headToHead[`${a}-${b}`]=sa-sb;
+      headToHead[`${b}-${a}`]=sb-sa;
+    });
+  });
+
+  st.forEach(t=>t.saldo=t.legsFor-t.legsAgainst);
+
+  // Jessica (idx 1 in Poule A) uitsluiten van eindstand maar scores wel meenemen
+  const JESSICA_IDX = pool==='a' ? 1 : -1;
+  const sorted=st.map((t,i)=>({...t,idx:i}))
+    .filter(t=>t.idx!==JESSICA_IDX)
+    .sort((x,y)=>{
+      if(y.pts!==x.pts) return y.pts-x.pts;
+      if(y.saldo!==x.saldo) return y.saldo-x.saldo;
+      const h2h=headToHead[`${x.idx}-${y.idx}`];
+      if(h2h!==undefined && h2h!==0) return -h2h;
+      if(y.legsFor!==x.legsFor) return y.legsFor-x.legsFor;
+      return 0;
+    });
+
+  return sorted;
+}
+
+function isPoolComplete(pool){
+  // True zodra alle wedstrijden van deze poule een score hebben
+  const rounds=pool==='a'?ROUNDS_A:ROUNDS_B;
+  for(let ri=0; ri<rounds.length; ri++){
+    for(let mi=0; mi<rounds[ri].length; mi++){
+      const key=`${pool}-r${ri}-${mi}`;
+      const sc=state.scores[key];
+      if(!sc||sc[0]===''||sc[1]==='') return false;
+    }
+  }
+  return true;
+}
+
+function findTiebreaks(teams,pool){
+  // Geeft paren teams terug die volledig gelijk staan (punten, saldo én onderlinge uitslag)
+  // en dus een beslissende leg nodig hebben.
+  const st=calcStand(teams,pool);
+  const tiebreaks=[];
+  for(let i=0;i<st.length-1;i++){
+    const a=st[i], b=st[i+1];
+    if(a.pts===b.pts && a.saldo===b.saldo){
+      tiebreaks.push([a.name,b.name]);
+    }
+  }
+  return tiebreaks;
+}
+
+function renderStand(){
+  let anyPoolComplete=false;
+  ['a','b'].forEach(pool=>{
+    const teams=pool==='a'?state.teamsA:state.teamsB;
+    const st=calcStand(teams,pool);
+    let rows=st.map((t,i)=>{
+      const cls=i<2?'q-win':i<4?'q-los':'q-last';
+      const saldoText=(t.saldo>0?'+':'')+t.saldo;
+      return `<tr class="${cls}"><td style="font-weight:800;color:var(--text3)">${i+1}</td><td>${t.name}</td><td>${t.played}</td><td>${t.w}</td><td>${t.g}</td><td>${t.v}</td><td style="font-weight:800">${t.pts}</td><td>${t.legsFor}</td><td>${t.legsAgainst}</td><td style="font-weight:700">${saldoText}</td></tr>`;
+    }).join('');
+
+    // Jessica apart tonen onder de stand als niet-tellend
+    if(pool==='a'){
+      const allSt=teams.map((name,i)=>({name,idx:i}));
+      const jessica=allSt.find(t=>t.idx===1);
+      if(jessica){
+        rows+=`<tr style="opacity:.45;font-style:italic"><td style="font-size:9px;color:var(--text3)">—</td><td>${jessica.name} <span style="font-size:9px;color:#DC2626">(telt niet mee)</span></td><td colspan="8" style="font-size:9px;color:var(--text3)">Voegt zich bij Anne en Camelia in de finale</td></tr>`;
+      }
+    }
+
+    document.getElementById('stand-'+pool).innerHTML=rows;
+
+    const complete=isPoolComplete(pool);
+    if(complete) anyPoolComplete=true;
+
+    const tiebreaks=complete?findTiebreaks(teams,pool):[];
+    const noteId='tiebreak-note-'+pool;
+    let existingNote=document.getElementById(noteId);
+    if(existingNote) existingNote.remove();
+    if(tiebreaks.length){
+      const parent=document.getElementById('stand-'+pool).closest('.card');
+      const note=document.createElement('div');
+      note.id=noteId;
+      note.style.cssText='margin-top:10px;font-size:12px;font-weight:700;color:var(--orange-dark);background:var(--orange-light);padding:8px 12px;border-radius:7px';
+      note.innerHTML=tiebreaks.map(([x,y])=>`Beslissende leg nodig tussen <strong>${x}</strong> en <strong>${y}</strong> (gelijk op punten, saldo én onderlinge uitslag)`).join('<br>');
+      parent.appendChild(note);
+    }
+  });
+
+  const infoBox=document.getElementById('stand-tiebreak-info');
+  if(infoBox) infoBox.style.display=anyPoolComplete?'block':'none';
+}
+
+function renderKO(){
+  const sA=calcStand(state.teamsA,'a');
+  const sB=calcStand(state.teamsB,'b');
+  // Anne en Camelia (idx 4) krijgt Jessica erbij in de finale
+  const enrichName=(arr,i)=>{
+    const name=arr[i]?.name||'?';
+    // idx 4 in teamsA = Anne en Camelia
+    if(arr===sA && arr[i]?.idx===4) return 'Anne, Camelia en Jessica';
+    return name;
+  };
+  const nm=(arr,i)=>enrichName(arr,i);
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  document.getElementById('ko-sf1-label').innerHTML=`${nm(sA,0)} vs ${nm(sB,1)}<small>${t.ko_sf1_small}</small>`;
+  document.getElementById('ko-sf2-label').innerHTML=`${nm(sB,0)} vs ${nm(sA,1)}<small>${t.ko_sf2_small}</small>`;
+  document.getElementById('ko-sf3-label').innerHTML=`${nm(sA,2)} vs ${nm(sB,3)}<small>${t.ko_sf3_small}</small>`;
+  document.getElementById('ko-sf4-label').innerHTML=`${nm(sB,2)} vs ${nm(sA,3)}<small>${t.ko_sf4_small}</small>`;
+  document.getElementById('ko-final-label').innerHTML=`<strong>${t.ko_final_vs}</strong><small>${t.ko_final_small}</small>`;
+  document.getElementById('ko-3rd-label').innerHTML=`${t.ko_3rd_vs}<small>${t.ko_3rd_small}</small>`;
+  document.getElementById('ko-consol-label').innerHTML=`${t.ko_consol_vs}<small>${t.ko_consol_small}</small>`;
+  document.getElementById('ko-78-label').innerHTML=`${t.ko_78_vs}<small>${t.ko_78_small}</small>`;
+  renderKoMatches();
+}
+
+/* ── RMA: afmeldingen per team ── */
+function getAllTeamsFlat(){
+  // Geeft alle 10 teams terug met hun poule-letter en index, voor dropdown en overzicht
+  const list=[];
+  state.teamsA.forEach((name,i)=>list.push({pool:'A',idx:i,name}));
+  state.teamsB.forEach((name,i)=>list.push({pool:'B',idx:i,name}));
+  return list;
+}
+
+function rmaKey(pool,idx){ return `${pool}-${idx}`; }
+
+function todayStr(){
+  const now=new Date();
+  return String(now.getDate()).padStart(2,'0')+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+now.getFullYear();
+}
+
+function buildRmaDropdown(){
+  const select=document.getElementById('rma-team-select');
+  if(!select) return;
+  const current=select.value;
+  select.innerHTML='<option value="">— Kies je team —</option>';
+  getAllTeamsFlat().forEach(t=>{
+    const key=rmaKey(t.pool,t.idx);
+    const opt=document.createElement('option');
+    opt.value=key;
+    opt.textContent=`Poule ${t.pool} — ${t.name}`;
+    select.appendChild(opt);
+  });
+  if(current) select.value=current;
+}
+
+function submitRmaAfmelding(){
+  const select=document.getElementById('rma-team-select');
+  const key=select.value;
+  const codeInput=document.getElementById('rma-team-code');
+  const errorEl=document.getElementById('rma-team-error');
+  errorEl.style.display='none';
+
+  if(!key){
+    alert('Kies eerst je team uit de lijst.');
+    return;
+  }
+  if(codeInput.value.trim()!==FIXED_PASSWORDS['rma']){
+    errorEl.style.display='block';
+    return;
+  }
+
+  if(!state.rma) state.rma={};
+  state.rma[key]={afgemeld:true,datum:todayStr(),status:'in behandeling'};
+  save();
+  codeInput.value='';
+  showRmaStatus(key);
+  renderRmaOverview();
+}
+
+function submitPersonAfmelding(){
+  const nameInput=document.getElementById('rma-person-name');
+  const codeInput=document.getElementById('rma-person-code');
+  const errorEl=document.getElementById('rma-person-error');
+  errorEl.style.display='none';
+
+  const name=nameInput.value.trim();
+  if(!name){
+    alert('Vul je naam in.');
+    return;
+  }
+  if(codeInput.value.trim()!==FIXED_PASSWORDS['rma']){
+    errorEl.style.display='block';
+    return;
+  }
+
+  if(!state.personAfmeldingen) state.personAfmeldingen={};
+  const key='persoon-'+name.toLowerCase().replace(/\s+/g,'-')+'-'+Date.now();
+  state.personAfmeldingen[key]={naam:name,datum:todayStr(),status:'in behandeling'};
+  save();
+  codeInput.value='';
+
+  showPersonStatus(name);
+  renderPersonOverview();
+}
+
+function showRmaStatus(key){
+  const card=document.getElementById('rma-status-card');
+  if(!card) return;
+  const entry=state.rma && state.rma[key];
+  if(!entry){ card.style.display='none'; return; }
+  const all=getAllTeamsFlat();
+  const team=all.find(t=>rmaKey(t.pool,t.idx)===key);
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  card.style.display='block';
+  document.getElementById('rma-status-teamname').textContent=team?`${t.pool_label} ${team.pool} — ${team.name}`:key;
+  document.getElementById('rma-status-date').textContent=t.rma_unsubscribed_on+entry.datum;
+}
+
+function showPersonStatus(name){
+  const card=document.getElementById('rma-status-card');
+  if(!card) return;
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  card.style.display='block';
+  document.getElementById('rma-status-teamname').textContent=name;
+  document.getElementById('rma-status-date').textContent=t.rma_unsubscribed_on+todayStr();
+}
+
+function renderRmaOverview(){
+  const tbody=document.getElementById('rma-overview');
+  if(!tbody) return;
+  const all=getAllTeamsFlat();
+  const t=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  tbody.innerHTML=all.map(team=>{
+    const key=rmaKey(team.pool,team.idx);
+    const afgemeld=state.rma && state.rma[key] && state.rma[key].afgemeld;
+    const statusHtml=afgemeld
+      ? `<span class="badge bc">${t.badge_unsubscribed}</span>`
+      : `<span class="badge bg" style="background:var(--green-light);color:var(--green)">${t.badge_subscribed}</span>`;
+    return `<tr><td>${team.pool}</td><td>${team.name}</td><td>${statusHtml}</td></tr>`;
+  }).join('');
+}
+
+function renderPersonOverview(){
+  const card=document.getElementById('rma-person-overview-card');
+  const tbody=document.getElementById('rma-person-overview');
+  if(!tbody||!card) return;
+  const entries=state.personAfmeldingen?Object.values(state.personAfmeldingen):[];
+  if(entries.length===0){
+    card.style.display='none';
+    return;
+  }
+  card.style.display='block';
+  tbody.innerHTML=entries.map(p=>`<tr><td>${p.naam}</td><td>${p.datum}</td></tr>`).join('');
+}
+
+function renderRma(){
+  buildRmaDropdown();
+  renderRmaOverview();
+  renderPersonOverview();
+  const select=document.getElementById('rma-team-select');
+  if(select && select.value) showRmaStatus(select.value);
+}
+
+function renderAll(){
+  renderTeamsOverview();
+  renderMatches();
+  renderKoMatches();
+  renderStand();
+  renderKO();
+  renderRma();
+}
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach((el,i)=>{
+    el.classList.toggle('active',['welkom','padel','teams','programma','scores','stand','ko','rma'][i]===p);
+  });
+  document.getElementById('page-'+p).classList.add('active');
+  if(p==='stand')renderStand();
+  if(p==='ko')renderKO();
+  if(p==='teams')renderTeamsOverview();
+  if(p==='rma')renderRma();
+  if(p==='scores'){renderMatches();renderKoMatches();}
+}
+
+/* ── Taalswitcher (eigen vertaalsysteem) ── */
+function toggleLangMenu(){
+  document.getElementById('lang-menu').classList.toggle('open');
+}
+
+// Sluit het menu als je ergens anders klikt
+document.addEventListener('click', function(e){
+  const switcher = document.getElementById('lang-switcher');
+  if(switcher && !switcher.contains(e.target)){
+    document.getElementById('lang-menu').classList.remove('open');
+  }
+});
+
+let currentLang='nl';
+
+function setLanguage(langCode){
+  currentLang=langCode;
+  const labels={nl:'NL',en:'EN',fr:'FR',pl:'PL'};
+  document.getElementById('lang-current').textContent=labels[langCode]||langCode.toUpperCase();
+  document.getElementById('lang-menu').classList.remove('open');
+
+  document.querySelectorAll('.lang-option').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.lang===langCode);
+  });
+
+  try{ localStorage.setItem('dsit-padel-lang', langCode); }catch(e){}
+
+  applyTranslations();
+}
+
+function applyTranslations(){
+  const dict=TRANSLATIONS[currentLang]||TRANSLATIONS.nl;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(dict[key]!==undefined){
+      el.innerHTML=dict[key];
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-placeholder');
+    if(dict[key]!==undefined){
+      el.setAttribute('placeholder', dict[key]);
+    }
+  });
+  // Her-render dynamische onderdelen die JS-gegenereerde tekst bevatten
+  if(typeof renderAll==='function') renderAll();
+  if(typeof renderGroupSchedule==='function') renderGroupSchedule();
+}
+
+function restoreLanguagePreference(){
+  let saved='nl';
+  try{ saved=localStorage.getItem('dsit-padel-lang')||'nl'; }catch(e){}
+  currentLang=saved;
+  const labels={nl:'NL',en:'EN',fr:'FR',pl:'PL'};
+  document.getElementById('lang-current').textContent=labels[saved]||saved.toUpperCase();
+  document.querySelectorAll('.lang-option').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.lang===saved);
+  });
+  applyTranslations();
+}
+
+load();
+restoreLanguagePreference();
+
+/* ── Confetti kanon ── */
+function launchConfetti(){
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999';
+  document.body.appendChild(canvas);
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+
+  const colors=['#F15C22','#000639','#fff','#FFD700','#1a8f5e','#534AB7'];
+  const pieces=[];
+  for(let i=0;i<180;i++){
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height - canvas.height,
+      w: Math.random()*10+5,
+      h: Math.random()*6+3,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*360,
+      rotSpeed: (Math.random()-0.5)*6,
+      vy: Math.random()*3+2,
+      vx: (Math.random()-0.5)*2,
+      opacity: 1
+    });
+  }
+
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.save();
+      ctx.translate(p.x+p.w/2, p.y+p.h/2);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.globalAlpha=p.opacity;
+      ctx.fillStyle=p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+      p.x+=p.vx;
+      p.y+=p.vy;
+      p.rot+=p.rotSpeed;
+      if(frame>120) p.opacity-=0.008;
+    });
+    frame++;
+    if(frame<220) requestAnimationFrame(draw);
+    else canvas.remove();
+  }
+  draw();
+}
+
+// Confetti starten zodra de pagina geladen is
+setTimeout(launchConfetti, 400);
+</script>
+</body>
+</html>
